@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{25C0260C-45F4-48F8-B803-C175CC01A739}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Data</RootNamespace>
+    <AssemblyName>Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Context.cs" />
+    <Compile Include="Infrastructure\DatabaseFactory.cs" />
+    <Compile Include="Infrastructure\Disposable.cs" />
+    <Compile Include="Infrastructure\IDatabaseFactory .cs" />
+    <Compile Include="Infrastructure\IRepositoryBase.cs" />
+    <Compile Include="Infrastructure\IUnitOfWork.cs" />
+    <Compile Include="Infrastructure\RepositoryBase.cs" />
+    <Compile Include="Infrastructure\UnitOfWork.cs" />
+    <Compile Include="Models\address.cs" />
+    <Compile Include="Models\conversation.cs" />
+    <Compile Include="Models\curriculum.cs" />
+    <Compile Include="Models\demande.cs" />
+    <Compile Include="Models\epionnedatabaseContext.cs" />
+    <Compile Include="Models\expertise.cs" />
+    <Compile Include="Models\Mapping\addressMap.cs" />
+    <Compile Include="Models\Mapping\conversationMap.cs" />
+    <Compile Include="Models\Mapping\curriculumMap.cs" />
+    <Compile Include="Models\Mapping\demandeMap.cs" />
+    <Compile Include="Models\Mapping\expertiseMap.cs" />
+    <Compile Include="Models\Mapping\medicalpathMap.cs" />
+    <Compile Include="Models\Mapping\medicalvisitMap.cs" />
+    <Compile Include="Models\Mapping\messagedoctorMap.cs" />
+    <Compile Include="Models\Mapping\motifMap.cs" />
+    <Compile Include="Models\Mapping\pathdoctorMap.cs" />
+    <Compile Include="Models\Mapping\rdvMap.cs" />
+    <Compile Include="Models\Mapping\recievedmessageMap.cs" />
+    <Compile Include="Models\Mapping\sentmessageMap.cs" />
+    <Compile Include="Models\Mapping\transportMap.cs" />
+    <Compile Include="Models\Mapping\t_todoMap.cs" />
+    <Compile Include="Models\Mapping\userMap.cs" />
+    <Compile Include="Models\medicalpath.cs" />
+    <Compile Include="Models\medicalvisit.cs" />
+    <Compile Include="Models\messagedoctor.cs" />
+    <Compile Include="Models\motif.cs" />
+    <Compile Include="Models\pathdoctor.cs" />
+    <Compile Include="Models\rdv.cs" />
+    <Compile Include="Models\recievedmessage.cs" />
+    <Compile Include="Models\sentmessage.cs" />
+    <Compile Include="Models\transport.cs" />
+    <Compile Include="Models\t_todo.cs" />
+    <Compile Include="Models\user.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{878f9e51-952f-4ef6-8313-dc4f47147117}</Project>
+      <Name>Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Conventions\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
