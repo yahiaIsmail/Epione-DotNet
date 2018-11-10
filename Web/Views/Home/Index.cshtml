@@ -1,31 +1,196 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<main>
+    <div class="hero_home version_1">
+        <div class="content">
+            <h3>Find a Doctor!</h3>
+            <p>
+                Ridiculus sociosqu cursus neque cursus curae ante scelerisque vehicula.
+            </p>
+            <form method="post" action="http://www.ansonika.com/findoctor/list.html">
+                <div id="custom-search-input">
+                    <div class="input-group">
+                        <input type="text" class=" search-query" placeholder="Ex. Name, Specialization ....">
+                        <input type="submit" class="btn_search" value="Search">
+                    </div>
+                    <ul>
+                        <li>
+                            <input type="radio" id="all" name="radio_search" value="all" checked>
+                            <label for="all">All</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="doctor" name="radio_search" value="doctor">
+                            <label for="doctor">Doctor</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="clinic" name="radio_search" value="clinic">
+                            <label for="clinic">Clinic</label>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- /Hero -->
+    <div class="container margin_120_95">
+        <div class="main_title">
+            <h2>Discover the <strong>online</strong> appointment!</h2>
+            <p>Usu habeo equidem sanctus no. Suas summo id sed, erat erant oporteat cu pri. In eum omnes molestie. Sed ad debet scaevola, ne mel.</p>
+        </div>
+        <div class="row add_bottom_30">
+            <div class="col-lg-4">
+                <div class="box_feat" id="icon_1">
+                    <span></span>
+                    <h3>Find a Doctor</h3>
+                    <p>Usu habeo equidem sanctus no. Suas summo id sed, erat erant oporteat cu pri. In eum omnes molestie.</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="box_feat" id="icon_2">
+                    <span></span>
+                    <h3>View profile</h3>
+                    <p>Usu habeo equidem sanctus no. Suas summo id sed, erat erant oporteat cu pri. In eum omnes molestie.</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="box_feat" id="icon_3">
+                    <h3>Book a visit</h3>
+                    <p>Usu habeo equidem sanctus no. Suas summo id sed, erat erant oporteat cu pri. In eum omnes molestie.</p>
+                </div>
+            </div>
+        </div>
+        <!-- /row -->
+        <p class="text-center"><a href="list.html" class="btn_1 medium">Find Doctor</a></p>
+    </div>
+    <!-- /container -->
+    <div class="bg_color_1">
+        <div class="container margin_120_95">
+            <div class="main_title">
+                <h2>Most Viewed doctors</h2>
+                <p>Usu habeo equidem sanctus no. Suas summo id sed, erat erant oporteat cu pri.</p>
+            </div>
+            <div id="reccomended" class="owl-carousel owl-theme">
+                <div class="item">
+                    <a href="detail-page.html">
+                        <div class="views"><i class="icon-eye-7"></i>140</div>
+                        <div class="title">
+                            <h4>Dr. Julia Holmes<em>Pediatrician - Cardiologist</em></h4>
+                        </div><img src=@Url.Content("~/Content/img/doctor_1_carousel.jpg") alt="">
+                    </a>
+                </div>
+                <div class="item">
+                    <a href="detail-page.html">
+                        <div class="views"><i class="icon-eye-7"></i>120</div>
+                        <div class="title">
+                            <h4>Dr. Julia Holmes<em>Pediatrician</em></h4>
+                        </div><img src=@Url.Content("~/Content/img/doctor_2_carousel.jpg") alt="">
+                    </a>
+                </div>
+                <div class="item">
+                    <a href="detail-page.html">
+                        <div class="views"><i class="icon-eye-7"></i>115</div>
+                        <div class="title">
+                            <h4>Dr. Julia Holmes<em>Pediatrician</em></h4>
+                        </div><img src=@Url.Content("~/Content/img/doctor_3_carousel.jpg") alt="">
+                    </a>
+                </div>
+                <div class="item">
+                    <a href="detail-page.html">
+                        <div class="views"><i class="icon-eye-7"></i>98</div>
+                        <div class="title">
+                            <h4>Dr. Julia Holmes<em>Pediatrician</em></h4>
+                        </div><img src=@Url.Content("~/Content/img/doctor_4_carousel.jpg") alt="">
+                    </a>
+                </div>
+                <div class="item">
+                    <a href="detail-page.html">
+                        <div class="views"><i class="icon-eye-7"></i>98</div>
+                        <div class="title">
+                            <h4>Dr. Julia Holmes<em>Pediatrician</em></h4>
+                        </div><img src=@Url.Content("~/Content/img/doctor_5_carousel.jpg") alt="">
+                    </a>
+                </div>
+            </div>
+            <!-- /carousel -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /white_bg -->
+    <div class="container margin_120_95">
+        <div class="main_title">
+            <h2>Find your doctor or clinic</h2>
+            <p>Nec graeci sadipscing disputationi ne, mea ea nonumes percipitur. Nonumy ponderum oporteat cu mel, pro movet cetero at.</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-xl-4 col-lg-5 col-md-6">
+                <div class="list_home">
+                    <div class="list_title">
+                        <i class="icon_pin_alt"></i>
+                        <h3>Search by City or Zone</h3>
+                    </div>
+                    <ul>
+                        <li><a href="list.html"><strong>23</strong>Albany</a></li>
+                        <li><a href="list.html"><strong>23</strong>Albuquerque</a></li>
+                        <li><a href="list.html"><strong>23</strong>Atlanta</a></li>
+                        <li><a href="list.html"><strong>23</strong>Baltimore</a></li>
+                        <li><a href="list.html"><strong>23</strong>Baton Rouge</a></li>
+                        <li><a href="list.html"><strong>23</strong>Birmingham</a></li>
+                        <li><a href="list.html"><strong>23</strong>Boston</a></li>
+                        <li><a href="list.html"><strong>23</strong>Buffalo</a></li>
+                        <li><a href="list.html"><strong>23</strong>Charleston</a></li>
+                        <li><a href="list.html">More...</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-5 col-md-6">
+                <div class="list_home">
+                    <div class="list_title">
+                        <i class="icon_archive_alt"></i>
+                        <h3>Search by type</h3>
+                    </div>
+                    <ul>
+                        <li><a href="list.html"><strong>23</strong>Allergist</a></li>
+                        <li><a href="list.html"><strong>23</strong>Cardiologist</a></li>
+                        <li><a href="list.html"><strong>23</strong>Chiropractor</a></li>
+                        <li><a href="list.html"><strong>23</strong>Dentist</a></li>
+                        <li><a href="list.html"><strong>23</strong>Dermatologist</a></li>
+                        <li><a href="list.html"><strong>23</strong>Gastroenterologist</a></li>
+                        <li><a href="list.html"><strong>23</strong>Ophthalmologist</a></li>
+                        <li><a href="list.html"><strong>23</strong>Optometrist</a></li>
+                        <li><a href="list.html"><strong>23</strong>Pediatrician</a></li>
+                        <li><a href="list.html">More....</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /row -->
+    </div>
+    <!-- /container -->
+    <div id="app_section">
+        <div class="container">
+            <div class="row justify-content-around">
+                <div class="col-md-5">
+                    <p><img src=@Url.Content("~/Content/img/app_img.svg") alt="" class="img-fluid" width="500" height="433"></p>
+                </div>
+                <div class="col-md-6">
+                    <small>Application</small>
+                    <h3>Download <strong>Findoctor App</strong> Now!</h3>
+                    <p class="lead">Tota omittantur necessitatibus mei ei. Quo paulo perfecto eu, errem percipit ponderum no eos. Has eu mazim sensibus. Ad nonumes dissentiunt qui, ei menandri electram eos. Nam iisque consequuntur cu.</p>
+                    <div class="app_buttons wow" data-wow-offset="100">
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+                        <a href="#0" class="fadeIn"><img src=@Url.Content("~/Content/img/apple_app.png") alt="" width="150" height="50" data-retina="true"></a>
+                        <a href="#0" class="fadeIn"><img src=@Url.Content("~/Content/img/google_play_app.png") alt="" width="150" height="50" data-retina="true"></a>
+                    </div>
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+    <!-- /app_section -->
+</main>
+
