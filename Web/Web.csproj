@@ -166,15 +166,15 @@
     <Compile Include="Controllers\DoctorController.cs" />
 
     <Compile Include="Controllers\HomeController.cs" />
-<<<<<<< HEAD
+
     <Compile Include="Controllers\MedicalPathController.cs" />
-=======
+
 
     <Compile Include="Controllers\MedicalPathController.cs" />
 
     <Compile Include="Controllers\Motif2Controller.cs" />
 
->>>>>>> f3f1492794c022b0d0c3b1c564a8d4a4f4e39399
+
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -727,9 +727,9 @@
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Shared\_BackOfficeLayout.cshtml" />
     <Content Include="Views\BackOfficeHome\Index.cshtml" />
-<<<<<<< HEAD
+
     <Content Include="Views\MedicalPath\Index.cshtml" />
-=======
+
 
     <Content Include="Views\MedicalPath\Index.cshtml" />
 
@@ -741,7 +741,7 @@
     <Content Include="Views\Doctor\singleDoctor.cshtml" />
 
 
->>>>>>> f3f1492794c022b0d0c3b1c564a8d4a4f4e39399
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
