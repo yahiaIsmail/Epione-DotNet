@@ -21,6 +21,21 @@ namespace Web.Controllers
             return View();
         }
 
+        public ActionResult Demande()
+        {
+            return View();
+        }
+        public ActionResult allDoctors()
+        {
+            return View();
+        }
+
+        public ActionResult singleDoctor()
+        {
+            return View();
+        }
+
+
         /*
 
            public ActionResult About()

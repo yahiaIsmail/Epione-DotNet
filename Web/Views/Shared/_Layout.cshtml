@@ -62,18 +62,27 @@
                                     <span>@Html.ActionLink("Home", "Index", "Home")</span>
                                  
                                 </li>
-                                <!--<li>
+                                <li>
                                     <span><a href="#0">Doctors</a></span>
                                     <ul>
-                                        <li><a href="list.html">All Doctors (Test)</a></li>
-                                        <li><a href="grid-list.html">Single Doctor (Test)</a></li>
+                                        <li>
+                                            <span>@Html.ActionLink("AllDoctors", "allDoctors", "Home")</span>
+                                        </li>
+                                        <li>
+                                            <span>@Html.ActionLink("SingleDoctor", "singleDoctor", "Home")</span>
+                                        </li>
                                         
                                     </ul>
-                                </li>-->
+                                </li>
                                 
                                 <li>
                                     <span>@Html.ActionLink("Admin", "Index", "BackOfficeHome")</span>
 
+                                </li>
+                                <li>
+                                    <span>
+                                        @Html.ActionLink("Demande", "Demande", "Home")
+                                    </span>
                                 </li>
                                 <li>
                                     <span>
