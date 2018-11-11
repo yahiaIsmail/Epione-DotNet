@@ -158,9 +158,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BackOfficeHomeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MotifController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\MotifViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -710,6 +712,7 @@
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Shared\_BackOfficeLayout.cshtml" />
     <Content Include="Views\BackOfficeHome\Index.cshtml" />
+    <Content Include="Views\Motif\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -961,6 +964,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{25C0260C-45F4-48F8-B803-C175CC01A739}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{878f9e51-952f-4ef6-8313-dc4f47147117}</Project>
       <Name>Domain</Name>
