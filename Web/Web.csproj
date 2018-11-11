@@ -157,17 +157,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BackOfficeHomeController.cs" />
-<<<<<<< HEAD
     <Compile Include="Controllers\DemandeController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
-=======
 
     <Compile Include="Controllers\ConversationController.cs" />
 
     <Compile Include="Controllers\DemandeController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
 
->>>>>>> d612139c0133c80de8ae88625f61b5a3fa1e5b49
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Motif2Controller.cs" />
     <Compile Include="Global.asax.cs">
