@@ -157,8 +157,20 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BackOfficeHomeController.cs" />
+    <Compile Include="Controllers\DemandeController.cs" />
+    <Compile Include="Controllers\DoctorController.cs" />
+
+    <Compile Include="Controllers\ConversationController.cs" />
+
+    <Compile Include="Controllers\DemandeController.cs" />
+    <Compile Include="Controllers\DoctorController.cs" />
+
     <Compile Include="Controllers\HomeController.cs" />
+<<<<<<< HEAD
     <Compile Include="Controllers\MedicalPathController.cs" />
+=======
+    <Compile Include="Controllers\Motif2Controller.cs" />
+>>>>>>> 997313d141d081be7836a8b026053759c3f19925
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -711,7 +723,17 @@
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Shared\_BackOfficeLayout.cshtml" />
     <Content Include="Views\BackOfficeHome\Index.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\MedicalPath\Index.cshtml" />
+=======
+
+    <Content Include="Views\Motif2\Create.cshtml" />
+
+    <Content Include="Views\Demande\Demande.cshtml" />
+    <Content Include="Views\Doctor\allDoctors.cshtml" />
+    <Content Include="Views\Doctor\singleDoctor.cshtml" />
+
+>>>>>>> 997313d141d081be7836a8b026053759c3f19925
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
