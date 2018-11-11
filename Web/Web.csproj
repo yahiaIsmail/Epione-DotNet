@@ -158,6 +158,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BackOfficeHomeController.cs" />
+    <Compile Include="Controllers\DemandeController.cs" />
+    <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -711,9 +713,9 @@
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Shared\_BackOfficeLayout.cshtml" />
     <Content Include="Views\BackOfficeHome\Index.cshtml" />
-    <Content Include="Views\Home\Demande.cshtml" />
-    <Content Include="Views\Home\allDoctors.cshtml" />
-    <Content Include="Views\Home\singleDoctor.cshtml" />
+    <Content Include="Views\Demande\Demande.cshtml" />
+    <Content Include="Views\Doctor\allDoctors.cshtml" />
+    <Content Include="Views\Doctor\singleDoctor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
