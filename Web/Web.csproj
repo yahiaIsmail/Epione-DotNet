@@ -88,6 +88,18 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http">
+      <HintPath>..\packages\System.Net.Http.2.0.20126.16343\lib\net40\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.0.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+      <HintPath>..\packages\System.Net.Http.2.0.20126.16343\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -106,10 +118,6 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http">
-    </Reference>
-    <Reference Include="System.Net.Http.WebRequest">
     </Reference>
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -157,6 +165,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BackOfficeHomeController.cs" />
+<<<<<<< HEAD
+    <Compile Include="Controllers\ConversationController.cs" />
+=======
+    <Compile Include="Controllers\DemandeController.cs" />
+    <Compile Include="Controllers\DoctorController.cs" />
+>>>>>>> b010f7cb61452ba7424e746a2c6d66d10553d093
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Motif2Controller.cs" />
     <Compile Include="Global.asax.cs">
@@ -711,7 +725,13 @@
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Shared\_BackOfficeLayout.cshtml" />
     <Content Include="Views\BackOfficeHome\Index.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Motif2\Create.cshtml" />
+=======
+    <Content Include="Views\Demande\Demande.cshtml" />
+    <Content Include="Views\Doctor\allDoctors.cshtml" />
+    <Content Include="Views\Doctor\singleDoctor.cshtml" />
+>>>>>>> be063f3d148130c266f0850b1ee2c74ca1f92c92
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -953,6 +973,7 @@
     <Folder Include="Content\ADMIN\rs-plugin\js\js\vendors\jquery\" />
     <Folder Include="Content\ADMIN\rs-plugin\js\rs-plugin\css\" />
     <Folder Include="Content\ADMIN\rs-plugin\js\rs-plugin\js\" />
+    <Folder Include="Views\Conversation\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
