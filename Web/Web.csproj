@@ -712,7 +712,10 @@
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Shared\_BackOfficeLayout.cshtml" />
     <Content Include="Views\BackOfficeHome\Index.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Motif\Create.cshtml" />
+=======
+>>>>>>> parent of 4d1a680... Merge branch 'master' of https://github.com/yahiaIsmail/Epione-DotNet
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
