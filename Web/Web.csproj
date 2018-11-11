@@ -86,7 +86,6 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
@@ -713,9 +712,12 @@
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Shared\_BackOfficeLayout.cshtml" />
     <Content Include="Views\BackOfficeHome\Index.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Demande\Demande.cshtml" />
     <Content Include="Views\Doctor\allDoctors.cshtml" />
     <Content Include="Views\Doctor\singleDoctor.cshtml" />
+=======
+>>>>>>> 83ff6f4d6d23f6702aa7a2ca70b1cd033f603901
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
