@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Mvc;
 
@@ -15,10 +18,17 @@ namespace Web.Controllers
             return View();
         }
         //Add demand
-        public ActionResult Demande()
+        [HttpPost]
+        public ActionResult Demande(user u)
         {
-           
-            
+            HttpClient user = new HttpClient();
+            user.BaseAddress = new Uri("http://localhost:2663");
+            user.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response = user.GetAsync("api/user").Result;
+            if(response.IsSuccessStatusCode)
+            {
+               
+            }
                 return View();
             
         }
