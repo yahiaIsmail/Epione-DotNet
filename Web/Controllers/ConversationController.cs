@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Net.Http;
-
+using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using Data.Models;
 
@@ -21,7 +21,7 @@ namespace Web.Controllers
             HttpResponseMessage response = Client.GetAsync("api/conversation").Result;
             if (response.IsSuccessStatusCode)
             {
-               // ViewBag.result = response.Content.ReadAsAsync<IEnumerable<conversation>>().Result;
+                ViewBag.result = response.Content.ReadAsAsync<IEnumerable<conversation>>().Result;
             }else
             {
                 ViewBag.result = "error";
@@ -50,7 +50,7 @@ namespace Web.Controllers
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri("http://localhost:2663/");
 
-             //   client.PostAsJsonAsync<conversation>("api/conversation", conv).ContinueWith((postTask) => postTask.Result.EnsureSuccessStatusCode());
+                client.PostAsJsonAsync<conversation>("api/conversation", conv).ContinueWith((postTask) => postTask.Result.EnsureSuccessStatusCode());
 
                 return RedirectToAction("Index");
             }

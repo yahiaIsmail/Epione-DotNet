@@ -18,17 +18,10 @@ namespace Web.Controllers
             return View();
         }
         //Add demand
-        [HttpPost]
-        public ActionResult Demande(user u)
+
+        public ActionResult Demande()
         {
-            HttpClient user = new HttpClient();
-            user.BaseAddress = new Uri("http://localhost:2663");
-            user.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage response = user.GetAsync("api/user").Result;
-            if(response.IsSuccessStatusCode)
-            {
-               
-            }
+       
                 return View();
             
         }
