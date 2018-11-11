@@ -14,6 +14,7 @@ namespace Data
         {
 
         }
-      
+
+        public System.Data.Entity.DbSet<Data.Models.medicalpath> medicalpaths { get; set; }
     }
 }
