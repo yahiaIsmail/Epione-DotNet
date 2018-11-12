@@ -83,9 +83,11 @@ namespace Data.Models.Mapping
                         m.MapRightKey("conversations_id");
                     });
 
+            
             this.HasOptional(t => t.address)
                 .WithMany(t => t.users)
                 .HasForeignKey(d => d.address_id);
+            
 
         }
     }
