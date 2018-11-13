@@ -1,9 +1,12 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.ComponentModel.DataAnnotations;
-namespace Data.Models
+
+namespace Web.Models
 {
-    public partial class demande
+    public class DemandViewModel
     {
         public int id { get; set; }
 

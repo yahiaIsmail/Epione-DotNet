@@ -1,11 +1,11 @@
-﻿using Data.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Mvc;
+using Web.Models;
 
 namespace Web.Controllers
 {
@@ -28,7 +28,7 @@ namespace Web.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                ViewBag.result = response.Content.ReadAsAsync<IEnumerable<demande>>().Result;
+                ViewBag.result = response.Content.ReadAsAsync<IEnumerable<DemandViewModel>>().Result;
             }
             else
             {
@@ -64,7 +64,7 @@ namespace Web.Controllers
             */
 
 
-            demande d = new demande();
+            DemandViewModel d = new DemandViewModel();
 
             d.email = collection["email"];
             d.firstName = collection["firstName"];
@@ -89,7 +89,7 @@ namespace Web.Controllers
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri("http://localhost:18080/");
 
-                HttpResponseMessage response = client.PostAsJsonAsync<demande>("JAVAEE-web/rest/admin/adddemande", d).Result;
+                HttpResponseMessage response = client.PostAsJsonAsync<DemandViewModel>("JAVAEE-web/rest/admin/adddemande", d).Result;
                 if (response.IsSuccessStatusCode)
                 {
                 //    client.PostAsJsonAsync<demande>("JAVAEE-web/rest/admin/adddemande", d);
@@ -134,14 +134,14 @@ namespace Web.Controllers
             System.Diagnostics.Debug.WriteLine("******* email ********");
             System.Diagnostics.Debug.WriteLine(email);
 
-            demande d = new demande();
+            DemandViewModel d = new DemandViewModel();
 
             d.email = email;
 
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:18080/");
 
-            HttpResponseMessage response = client.PostAsJsonAsync<demande>("JAVAEE-web/rest/admin/deletedemande", d).Result;
+            HttpResponseMessage response = client.PostAsJsonAsync<DemandViewModel>("JAVAEE-web/rest/admin/deletedemande", d).Result;
             if (response.IsSuccessStatusCode)
             {
               //  client.PostAsJsonAsync<demande>("JAVAEE-web/rest/admin/deletedemande", d);
