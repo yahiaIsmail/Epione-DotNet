@@ -92,7 +92,7 @@ namespace Web.Controllers
                 HttpResponseMessage response = client.PostAsJsonAsync<demande>("JAVAEE-web/rest/admin/adddemande", d).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    client.PostAsJsonAsync<demande>("JAVAEE-web/rest/admin/adddemande", d);
+                //    client.PostAsJsonAsync<demande>("JAVAEE-web/rest/admin/adddemande", d);
                     // .ContinueWith((postTask) => postTask.Result.EnsureSuccessStatusCode());
                
                     return RedirectToAction("Demande");
@@ -100,7 +100,7 @@ namespace Web.Controllers
                 else
                 {
                
-                ViewBag.result = "error";
+                ViewBag.result = "Demand already exist";
               //  System.Diagnostics.Debug.WriteLine(ViewBag.result);
             }
 
@@ -144,7 +144,7 @@ namespace Web.Controllers
             HttpResponseMessage response = client.PostAsJsonAsync<demande>("JAVAEE-web/rest/admin/deletedemande", d).Result;
             if (response.IsSuccessStatusCode)
             {
-                client.PostAsJsonAsync<demande>("JAVAEE-web/rest/admin/deletedemande", d);
+              //  client.PostAsJsonAsync<demande>("JAVAEE-web/rest/admin/deletedemande", d);
                 // .ContinueWith((postTask) => postTask.Result.EnsureSuccessStatusCode());
 
                 return RedirectToAction("allDemands");
@@ -152,7 +152,7 @@ namespace Web.Controllers
             else
             {
 
-                ViewBag.result = "error";
+                ViewBag.result = "Demand does not exist";
             }
                 return View();
 
