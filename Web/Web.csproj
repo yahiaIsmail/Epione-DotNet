@@ -735,6 +735,8 @@
     <Content Include="Views\Doctor\singleDoctor.cshtml" />
     <Content Include="Views\Home\Create.cshtml" />
     <Content Include="Views\Demande\CreateDemand.cshtml" />
+    <Content Include="Views\Demande\allDemands.cshtml" />
+    <Content Include="Views\Demande\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
