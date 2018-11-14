@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Mvc;
 using Data.Models;
+using Web.Models;
 
 namespace Web.Controllers
 {
@@ -20,33 +21,39 @@ namespace Web.Controllers
             
             return View();
         }
-        
+
         public ActionResult Login()
         {
-            
             return View();
-        }
-        [HttpGet]
-        public ActionResult Create()
-        {
-            return View("create");
         }
 
         [HttpPost]
-        public ActionResult Create(user u)
+        public ActionResult Login(FormCollection collection)
         {
-            System.Diagnostics.Debug.WriteLine(u.email);
 
-            System.Diagnostics.Debug.WriteLine(u.password);
+            UserViewModel u = new UserViewModel();
+
+            u.email = collection["email"];
+            u.password = collection["password"];
+
+
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:18080");
-            // client.PostAsJsonAsync<DemandeViewModel>("Epione-web/rest/doctolib/ajoutDemande", demande).ContinueWith((postTask) => postTask.Result.EnsureSuccessStatusCode());
+            client.BaseAddress = new Uri("http://localhost:18080/");
 
-            client.PostAsJsonAsync("JAVAEE-web/rest/users/auth", u);
-            //.ContinueWith((postTask) => postTask.Result.EnsureSuccessStatusCode());
+            HttpResponseMessage response = client.PostAsJsonAsync<UserViewModel>("JAVAEE-web/rest/users/auth", u).Result;
+            if (response.IsSuccessStatusCode)
+            {
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+            else
+            {
+
+                ViewBag.result = "failed authetication";
+            }
+            return View();
         }
+
 
 
         public ActionResult Register()

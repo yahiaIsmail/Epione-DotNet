@@ -725,7 +725,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Shared\_BackOfficeLayout.cshtml" />
     <Content Include="Views\BackOfficeHome\Index.cshtml" />
@@ -734,10 +733,10 @@
     <Content Include="Views\Demande\Demande.cshtml" />
     <Content Include="Views\Doctor\allDoctors.cshtml" />
     <Content Include="Views\Doctor\singleDoctor.cshtml" />
-    <Content Include="Views\Home\Create.cshtml" />
     <Content Include="Views\Demande\CreateDemand.cshtml" />
     <Content Include="Views\Demande\allDemands.cshtml" />
     <Content Include="Views\Demande\Delete.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
