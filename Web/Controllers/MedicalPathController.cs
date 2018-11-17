@@ -19,10 +19,10 @@ namespace Web.Controllers
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:18080");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage response = client.GetAsync("/JAVAEE-web/rest/medicalPath/getPathById/6").Result;
+            HttpResponseMessage response = client.GetAsync("/JAVAEE-web/rest/medicalPath/getDoctorVisits/2").Result;
             
 
-            ViewBag.result = response.Content.ReadAsAsync<IEnumerable<medicalpath>>().Result;
+            ViewBag.result = response.Content.ReadAsAsync<IEnumerable<medicalvisit>>().Result;
           
               
             return View();
