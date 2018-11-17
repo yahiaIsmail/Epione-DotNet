@@ -184,6 +184,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MedicalPathController.cs" />
     <Compile Include="Controllers\Motif2Controller.cs" />
+    <Compile Include="Controllers\StatController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -558,6 +559,7 @@
     <Content Include="Content\assets\validate.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Chart.js" />
     <Content Include="Content\css\blog.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\custom.css" />
@@ -603,6 +605,8 @@
     <Content Include="Content\img\thumb_blog.jpg" />
     <Content Include="Content\img\video_fix.png" />
     <Content Include="Content\js\bootstrap-datepicker.js" />
+    <Content Include="Content\js\bootstrap.js" />
+    <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\common_scripts.min.js" />
     <Content Include="Content\js\functions.js" />
     <Content Include="Content\js\infobox.js" />
@@ -745,6 +749,7 @@
     <Content Include="Views\Demande\allDemands.cshtml" />
     <Content Include="Views\Demande\Delete.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Stat\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

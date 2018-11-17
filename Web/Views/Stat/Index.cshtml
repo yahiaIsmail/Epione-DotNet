@@ -1,0 +1,74 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style>
+        #charContainer {
+            widows: 450px;
+            height: 400px;
+            width: 600px;
+            border: 1px solid #0094ff;
+            padding: 1px;
+            border-radius: 4px;
+        }
+
+        #jobtype {
+            widows: 180px;
+            height: 180px;
+            width: 180px;
+            padding: 1px;
+            border-radius: 4px;
+            center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Number of Freelancers VS number of resources</h2>
+    <div id="charContainer">
+        <canvas id="jobtype"></canvas>
+
+    </div>
+
+    <script src="~/Content/Chart.js"></script>
+    <script src="~/Content/js/jquery-2.2.4.min.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script>
+            var oilCanvas = document.getElementById("jobtype");
+            var repArray=@Html.Raw(Json.Encode(ViewBag.REP));
+     @*//   var type=@Html.Raw(Json.Encode(ViewBag.type));*@
+
+       // var type=[123,23,54,3];
+
+            var oilData = {
+                labels: ['Pigistes','Employees'],
+                datasets: [
+                    {
+                        data: repArray,
+                        backgroundColor: [
+                          "#63FF84"  ,
+                            "#FF6384"
+
+                        ]
+                    }]
+            };
+
+            var pieChart = new Chart(oilCanvas, {
+                type: 'doughnut',
+                data: oilData
+            });
+
+
+    </script>
+</body>
+</html>

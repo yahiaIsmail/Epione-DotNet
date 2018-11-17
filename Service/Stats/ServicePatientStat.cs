@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Service.Stats
 {
-    class ServicePatientStat: Service<user>, IServicePatientStat
+    public class ServicePatientStat: Service<user>, IServicePatientStat
     {
         static IDatabaseFactory dbf = new DatabaseFactory();
 

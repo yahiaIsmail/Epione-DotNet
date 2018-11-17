@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data.Models
 {
+    [Table("user")]
     public partial class user
     {
+        
         public user()
         {
             this.expertises = new List<expertise>();

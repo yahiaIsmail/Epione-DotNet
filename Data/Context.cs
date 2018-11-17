@@ -10,11 +10,13 @@ namespace Data
 {
    public class Context : DbContext
     {
-        public Context(): base("name=EpioneDB")
+        public Context(): base("name=epionnedatabaseContext")
         {
 
         }
 
         public System.Data.Entity.DbSet<Data.Models.medicalpath> medicalpaths { get; set; }
+
+        public System.Data.Entity.DbSet<Data.Models.user> user { get; set; }
     }
 }
