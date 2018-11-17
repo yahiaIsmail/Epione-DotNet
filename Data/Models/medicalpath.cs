@@ -12,7 +12,7 @@ namespace Data.Models
 
         public int id { get; set; }
         public Nullable<bool> active { get; set; }
-        public Nullable<System.DateTime> createdAt { get; set; }
+        public Nullable<long> createdAt { get; set; }
         public string justification { get; set; }
         public Nullable<bool> status { get; set; }
         public Nullable<int> rendezVous_id { get; set; }
