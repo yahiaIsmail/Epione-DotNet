@@ -7,8 +7,8 @@ namespace Web.Models
 {
     public class UserViewModel
     {
-        public int userId { get; set; }
-        public string Nom { get; set; }
-        public string Prenom { get; set; }
+       
+        public string email { get; set; }
+        public string password { get; set; }
     }
 }

@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "allDemands";
+    Layout = "~/Views/Shared/_BackOfficeLayout.cshtml";
+}
+
+<h2>allDemands</h2>
+
+<table>
+    @foreach (var p in ViewBag.result)
+    {
+        <tr>
+            <td>@p.email</td>
+            <td>@p.firstName</td>
+            <td>@p.lastName</td>
+            <td>@p.state</td>
+            <td>@p.speciality</td>
+            <td>@Html.ActionLink("Delete", "Delete", new { email = p.email })</td>
+        </tr>
+    }
+</table>
+
+
+</table>
