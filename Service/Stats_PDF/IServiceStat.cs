@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Service.Stats
 {
-    interface IServicePatientStat :  IService<user>
+    public interface IServiceStat :  IService<rdv>
     {
-
+        List<int> getStat();
     }
 
 }
