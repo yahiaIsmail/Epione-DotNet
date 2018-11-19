@@ -18,5 +18,7 @@ namespace Data
         public System.Data.Entity.DbSet<Data.Models.medicalpath> medicalpaths { get; set; }
 
         public System.Data.Entity.DbSet<Data.Models.user> user { get; set; }
+
+        public System.Data.Entity.DbSet<Data.Models.rdv> rdv { get; set; }
     }
 }
