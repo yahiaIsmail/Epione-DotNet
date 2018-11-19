@@ -193,10 +193,14 @@
     <Compile Include="Controllers\MedicalPathController.cs" />
     <Compile Include="Controllers\Motif2Controller.cs" />
     <Compile Include="Controllers\StatController.cs" />
+    <Compile Include="Controllers\PatientController.cs" />
+    <Compile Include="Controllers\RdvController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DemandViewModel.cs" />
+    <Compile Include="Models\PatientViewModel.cs" />
+    <Compile Include="Models\RdvViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -760,6 +764,10 @@
     <Content Include="Views\Demande\Delete.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Stat\Index.cshtml" />
+    <Content Include="Views\Patient\Create.cshtml" />
+    <Content Include="Views\Patient\ConfirmRegister.cshtml" />
+    <Content Include="Views\Rdv\Doctor.cshtml" />
+    <Content Include="Views\notFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
