@@ -15,14 +15,7 @@ namespace Web.Controllers
 {
     public class StatController : Controller
     {
-        //Context db = new Context();
-        static IDatabaseFactory dbf = new DatabaseFactory();
-
-        static IUnitOfWork uow = new UnitOfWork(dbf);
-
-        ServiceStat statRessource = new ServiceStat();
-        Context db = new Context();
-
+        
         ServiceStat statService = new ServiceStat();
         ServicePDF pdfService = new ServicePDF();
 
@@ -33,7 +26,7 @@ namespace Web.Controllers
             statList = statService.getStat();
             ViewBag.confirmed = statList[0];
             ViewBag.cancled= statList[1];
-           // System.Diagnostics.Debug.WriteL2ne(ViewBag.REP);
+           // System.Diagnostics.Debug.WriteLine(ViewBag.REP);
             return View();
         }
         public ActionResult pdfConverter()

@@ -58,11 +58,6 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult CreateDemand(FormCollection collection)
         {
-            /*
-            
-
-            */
-
 
             DemandViewModel d = new DemandViewModel();
 
@@ -72,51 +67,27 @@ namespace Web.Controllers
             d.speciality = collection["speciality"];
             d.state = collection["state"];
 
-
-
-            System.Diagnostics.Debug.WriteLine(collection["email"]);
-            System.Diagnostics.Debug.WriteLine(collection["firstName"]);
-            System.Diagnostics.Debug.WriteLine(collection["lastName"]);
-            System.Diagnostics.Debug.WriteLine(collection["speciality"]);
-            System.Diagnostics.Debug.WriteLine(collection["state"]);
-
-
-
-           // try
-         //   {
-                // TODO: Add insert logic here
-
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri("http://localhost:18080/");
 
                 HttpResponseMessage response = client.PostAsJsonAsync<DemandViewModel>("JAVAEE-web/rest/admin/adddemande", d).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                //    client.PostAsJsonAsync<demande>("JAVAEE-web/rest/admin/adddemande", d);
-                    // .ContinueWith((postTask) => postTask.Result.EnsureSuccessStatusCode());
+             
                
-                    return RedirectToAction("Demande");
-                }
+                    
+                    ViewBag.succ = "Demand succesfully created";
+            }
                 else
                 {
                
-                ViewBag.result = "Demand already exist";
-              //  System.Diagnostics.Debug.WriteLine(ViewBag.result);
+                ViewBag.fail = "Demand already exist";
             }
 
 
-           // client.PostAsJsonAsync<demande>("JAVAEE-web/rest/admin/adddemande", d);
-                // .ContinueWith((postTask) => postTask.Result.EnsureSuccessStatusCode());
-
-                
-
-            //    return RedirectToAction("Demande");
-
-          //  }
-            //catch
-            //{
-                return View();
-         //   }
+           
+            return View();
+        
 
         }
 
