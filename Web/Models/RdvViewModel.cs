@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -25,5 +26,13 @@ namespace Web.Models
         public int day { get; set; }
         public int hour { get; set; }
         public int minutes { get; set; }
+    }
+
+    public class MotifRdvModel
+    {
+        public int id { get; set; }
+        public string description { get; set; }
+        public user doctor { get; set; }
+
     }
 }

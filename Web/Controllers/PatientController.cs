@@ -8,6 +8,10 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Web.Models;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Web.Controllers
 {
@@ -43,6 +47,7 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult Create(PatientViewModel patient)
         {
+
             try
             {
 
@@ -52,40 +57,61 @@ namespace Web.Controllers
                 }
 
 
-                PatientViewModel usr = new PatientViewModel()
+                if (Request.Files == null)
                 {
-                    email = patient.email,
-                    username = patient.username,
-                    password = patient.password,
-                    firstName = patient.firstName,
-                    lastName = patient.lastName
-                };
-
-                PatientModel patientModel = new PatientModel()
-                {
-                    email = patient.email,
-                    username = patient.username,
-                    password = patient.password,
-                    firstName = patient.firstName,
-                    lastName = patient.lastName
-                };
-
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://localhost:18080/");
-                HttpResponseMessage response;
-
-                response = client.PostAsJsonAsync<PatientModel>("JAVAEE-web/rest/users/addPatient", patientModel).Result;
-                Debug.Print(patient.ToString());
-                Debug.Print(usr.ToString());
-                if (response.IsSuccessStatusCode)
-                {
-                    return RedirectToAction("ConfirmRegister", new { email = patient.email });
-                }
-                else
-                {
-                    ViewBag.result = "An error occured please try again";
+                    ViewBag.imageUpload = "Error, Please select another image where your face is seen clearly";
                     return View(patient);
                 }
+
+                Account account = new Account(
+              "pidev",
+              "187685892358282",
+              "rL27N346tuXqVQyA5sR1oDLFJag");
+
+                Cloudinary cloudinary = new Cloudinary(account);
+                var uploadParams = new ImageUploadParams
+                {
+                    File = new FileDescription(Request.Files[0].FileName, Request.Files[0].InputStream)
+                };
+                var uploadResult = cloudinary.Upload(uploadParams);
+
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("http://127.0.0.1:5000/");
+                HttpResponseMessage response;
+                response = client.GetAsync("api/v1/face/url?img=" + uploadResult.SecureUri).Result;
+                var imageResponse = response.Content.ReadAsStringAsync();
+                var imageData = JObject.Parse(imageResponse.Result);
+                
+                if (!imageData["num_faces"].ToString().Equals("0"))
+                {
+                    HttpClient clientAdd = new HttpClient();
+                    clientAdd.BaseAddress = new Uri("http://127.0.0.1:18080/");
+                    HttpResponseMessage responseAdd;
+
+                    PatientModel patientModel = new PatientModel()
+                    {
+                        email = patient.email,
+                        username = patient.username,
+                        password = patient.password,
+                        firstName = patient.firstName,
+                        lastName = patient.lastName,
+                        urlPhoto = uploadResult.SecureUri.ToString()
+                    };
+
+                    responseAdd = clientAdd.PostAsJsonAsync<PatientModel>("JAVAEE-web/rest/users/addPatient", patientModel).Result;
+
+                    if (responseAdd.IsSuccessStatusCode)
+                    {
+                        return RedirectToAction("ConfirmRegister", new { email = patient.email });
+                    }
+                    else
+                    {
+                        ViewBag.result = "An error occured please try again";
+                        return View(patient);
+                    }
+                }
+                ViewBag.imageUpload = "Please verify ,the image contains you face";
+                return View(patient);
             }
             catch
             {

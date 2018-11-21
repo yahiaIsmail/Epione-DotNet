@@ -32,7 +32,7 @@
                 <div class="col-lg-5 ml-auto">
                     <div class="box_form">
                         <div id="message-register"></div>
-                        @using (Html.BeginForm())
+                        @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
                             @Html.AntiForgeryToken()
                             if (ViewBag.result != null) { 
@@ -94,8 +94,18 @@
                             </div>
                             
                             <div class="form-group">
+                                <label for="photo" class="control-label col-md-4">
+                                    Your Image
+                                </label>
                                 <div class="col-md-12">
-                                    <input type="file" id="photo" name="photo" class="form-control" />
+                                   @if (ViewBag.imageUpload != null)
+                                   {
+                                    <div class="alert alert-danger">
+                                    @ViewBag.imageUpload
+                                    </div>
+                                   }
+
+                                    <input type="file" id="photo" name="photo" class="form-control" accept="image/*" required/>
                                 </div>
                             </div>
 

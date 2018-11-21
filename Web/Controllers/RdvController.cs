@@ -1,12 +1,18 @@
-﻿using System;
+﻿using Data.Models;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Mvc;
 using System.Xml;
+using System.Xml.Linq;
+using Web.Models;
 
 namespace Web.Controllers
 {
@@ -38,26 +44,31 @@ namespace Web.Controllers
         public ActionResult Doctor(int? id)
         {
             if (!id.HasValue)
-                return RedirectToAction("notFound","Rdv");
-            //requesting the particular web page
-            string url = "http://localhost:18080/JAVAEE-web/rest/users/doctors/get/" + id;
-            var httpRequest = (HttpWebRequest)WebRequest.Create(url);
+                return RedirectToAction("notFound", "Rdv");
+            // data mta3 docteur
+            //HttpClient clientDoc = new HttpClient();
+            //clientDoc.BaseAddress = new Uri("http://localhost:18080/");
+            //HttpResponseMessage responseDoc;
+            //responseDoc = clientDoc.GetAsync("JAVAEE-web/rest/users/doctors/get/"+ id).Result;
+            //var docResponse = responseDoc.Content.ReadAsStringAsync();
+            //string DataString = docResponse.Result;
+            //XDocument xmlDoc = new XDocument();
+            //xmlDoc = XDocument.Parse(DataString);
 
-            //geting the response from the request url
-            var response = (HttpWebResponse)httpRequest.GetResponse();
+            // end data mta3 docteur
+            HttpClient clientMotif = new HttpClient();
+            clientMotif.BaseAddress = new Uri("http://localhost:18080/");
+            clientMotif.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage responseMotif = clientMotif.GetAsync("JAVAEE-web/rest/rdv/motifDoctor/" + id).Result;
 
-            //create a stream to hold the contents of the response (in this case it is the contents of the XML file
-            var receiveStream = response.GetResponseStream();
-
-            //creating XML document
-            var mySourceDoc = new XmlDocument();
-
-            //load the file from the stream
-            mySourceDoc.Load(receiveStream);
-
-            //close the stream
-            receiveStream.Close();
-            Debug.WriteLine(mySourceDoc);
+            if (responseMotif.IsSuccessStatusCode)
+            {
+                ViewBag.motifs = responseMotif.Content.ReadAsAsync<IEnumerable<DemandViewModel>>().Result;
+            }
+            else
+            {
+                ViewBag.motifs = "error";
+            }
             return View();
             //bech najouti function fi moif jee traja3 motifs by id docteur
             //w nafichiehom fi drop down list w el chosit na5edh el id mta3ha
