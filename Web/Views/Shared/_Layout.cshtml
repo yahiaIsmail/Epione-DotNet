@@ -96,6 +96,15 @@
                                         @Html.ActionLink("Register", "Register", "Home")
                                     </span>
                                 </li>
+                                @if (!string.IsNullOrEmpty(Session["firstName"] as string))
+                                {
+                                    <li>
+                                        <span style="color: red;">
+                                            Welcome @Session["firstName"]
+                                        </span>
+                                    </li>
+                                }
+                                
                            </ul>
                         </nav>
                         <!-- /main-menu -->
