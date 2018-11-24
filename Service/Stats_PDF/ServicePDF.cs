@@ -90,7 +90,7 @@ namespace Service.Stats
             // get medical path of today
             var queryPath = (from m in dbf.DataContext.rdv
                              join u in dbf.DataContext.user on m.doctors_id equals u.id
-                             join mp in dbf.DataContext.medicalpaths on m.id equals mp.rendezVous_id
+                             join mp in dbf.DataContext.medicalpath on m.id equals mp.rendezVous_id
                              where (u.email.Equals(email))
                              where (m.dateRDV.CompareTo(today) == 0)
                              select mp.justification).ToList();
