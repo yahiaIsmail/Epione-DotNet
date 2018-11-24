@@ -775,6 +775,9 @@
     <Content Include="Views\Patient\ConfirmRegister.cshtml" />
     <Content Include="Views\Rdv\Doctor.cshtml" />
     <Content Include="Views\notFound.cshtml" />
+    <Content Include="Views\MedicalPath\addDoctorsTo.cshtml" />
+    <Content Include="Views\MedicalPath\Create.cshtml" />
+    <Content Include="Views\MedicalPath\DisplayListOfDoctorsInMap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
