@@ -21,7 +21,7 @@ namespace Data.Models
         public DbSet<curriculum> curricula { get; set; }
         public DbSet<demande> demandes { get; set; }
         public DbSet<expertise> expertises { get; set; }
-        public DbSet<medicalpath> medicalpaths { get; set; }
+        public DbSet<medicalpath> medicalpath { get; set; }
         public DbSet<medicalvisit> medicalvisits { get; set; }
         public DbSet<messagedoctor> messagedoctors { get; set; }
         public DbSet<motif> motifs { get; set; }

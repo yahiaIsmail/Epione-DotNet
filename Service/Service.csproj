@@ -69,6 +69,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IMedicalService.cs" />
+    <Compile Include="MedicalPathService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stats\IServicePatientStat.cs" />
     <Compile Include="Stats\ServicePatientStat.cs" />

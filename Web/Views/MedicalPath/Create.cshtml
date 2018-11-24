@@ -1,0 +1,173 @@
+﻿@using System.ServiceModel.Configuration
+@model IEnumerable<Web.Models.RdvForMedicalViewModel>
+@{
+    ViewBag.Title = "Create Path";
+    Layout = "~/Views/Shared/_BackOfficeLayout.cshtml";
+}
+
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <div class="page-bar">
+            <div class="page-bar">
+                <div class="page-title-breadcrumb">
+                    <div class=" pull-left">
+                        <div class="page-title">Create Medical Path</div>
+                    </div>
+                    <ol class="breadcrumb page-breadcrumb pull-right">
+                        <li>
+                            <i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="#">My medical Paths</a>&nbsp;<i class="fa fa-angle-right"></i>
+                        </li>
+                        <li>
+                            <a class="parent-item" href="#">All Appointments</a>&nbsp;<i class="fa fa-angle-right"></i>
+                        </li>
+                        <li class="active">create path</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-topline-red">
+                    <div class="card-head">
+                        <header></header>
+                        <div class="tools">
+                            <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+                            <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+                            <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+                        </div>
+                    </div>
+                    <div class="card-body ">
+                        <div class="row">
+                          
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <div class="btn-group pull-right">
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:;">
+                                                <i class="fa fa-print"></i> Print
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;">
+                                                <i class="fa fa-file-pdf-o"></i> Save as PDF
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;">
+                                                <i class="fa fa-file-excel-o"></i> Export to Excel
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-scrollable">
+                            <table class="table table-hover table-checkable order-column full-width" id="example4">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Patient</th>
+                                    <th>Email </th>
+                                    <th> Status </th>
+                                    <th> Appointment date </th>
+                                      
+                                        
+                                    <th> Create Path </th>
+                                </tr>
+                                </thead>
+                                <tbody id="list">
+                                @foreach( var i in ViewBag.result){
+                                    <tr class="odd gradeX" id="@i.id">
+                                        <td class="patient-img">
+                                            <img src="@i.users.UrlPhoto" alt="patient image">
+                                        </td>
+                                        <td>@i.users.firstName  @i.users.lastName</td>
+                                        <td class="center">
+                                            <a href="mailto:@i.users.email">
+                                                @i.users.email </a>
+                                        </td>
+                                        <td class="center"><button type="button" class="btn btn-circle btn-warning">@i.status</button></td>
+                                        @{DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc)
+                                              .AddMilliseconds(@i.dateRDV).ToLocalTime();
+
+                                        } 
+            
+                                        <td class="center">
+                                            @dtDateTime
+                                        </td>
+
+                                        <td>
+                                            <a class="btn btn-primary btn-xs" onclick="alertsweet(@i.id)">
+                                                <i class="fa fa-plus"></i>
+                                            </a>
+
+                                        </td>
+                                    </tr>
+                                }
+                              
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var justif = "";
+    function alertsweet(id) {
+        obj = new Object();
+       
+        swal({
+            title: "Path creation",
+            text: "Justification",
+            type: "input",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true,
+            inputPlaceholder: "Write justification"
+        }, function (inputValue) {
+            if (inputValue === false) return false;
+            if (inputValue === "") {
+                swal.showInputError("You need to write justification for the path!");
+                return false
+            }
+            setTimeout(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/MedicalPath/addNewPath",
+
+                    data: { justifi: inputValue, idrdv: id },
+                    dataType: "json",
+                    success: function (data) {
+                        $('#' + id).remove();
+                        //swal("Succes!", "You wrote: " + data.message, "success");
+                        swal({
+                                title: "Do you want to add doctors the this path",
+                                text: "You will be redirected to another page!",
+                                type: "info",
+                                showCancelButton: true,
+                                confirmButtonClass: "btn-success",
+                                confirmButtonText: "Yes,Please!",
+                                cancelButtonText: "No, cancel!",
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            },
+                            function (isConfirm) {
+                                if (isConfirm) {
+                                    window.location = 'http://localhost:2663/MedicalPath/Index/idPath=' + data.message;
+                                } else {
+                                    swal("Cancelled", "You didn't choose to add doctors to the patient path :)", "error");
+                                }
+                            });
+                    }
+                });
+               
+                
+            }, 2000);
+           
+        });
+    }
+</script>

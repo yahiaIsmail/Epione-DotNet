@@ -1,0 +1,327 @@
+﻿@model  IEnumerable<Web.Models.MedicalPathViewModel>
+
+@{
+    int k = 0;
+    ViewBag.Title = "PathDoctors";
+    Layout = "~/Views/Shared/_BackOfficeLayout.cshtml";
+}
+
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+      integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+      crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+        integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+        crossorigin=""></script>
+
+
+
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <div class="page-bar">
+            <div class="page-title-breadcrumb">
+                <div class=" pull-left">
+                    <div class="page-title">Doctor List</div>
+                </div>
+                <ol class="breadcrumb page-breadcrumb pull-right">
+                    <li>
+                        <i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="index.html">Home</a>&nbsp;<i class="fa fa-angle-right"></i>
+                    </li>
+                    <li>
+                        <a class="parent-item" href="#">Doctors</a>&nbsp;<i class="fa fa-angle-right"></i>
+                    </li>
+                    <li class="active">Doctor List</li>
+                </ol>
+               
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tabbable-line">
+                    <!-- <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#tab1" data-toggle="tab"> List View </a>
+                        </li>
+                        <li>
+                            <a href="#tab2" data-toggle="tab"> Grid View </a>
+                        </li>
+                    </ul> -->
+                    <ul class="nav customtab nav-tabs" role="tablist">
+                        <li class="nav-item"><a href="#tab1" class="nav-link active" data-toggle="tab">List View</a></li>
+                        <li class="nav-item"><a href="#tab2" class="nav-link" data-toggle="tab">Grid View</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active fontawesome-demo" id="tab1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card card-topline-red">
+                                        <div class="card-head">
+                                            <header></header>
+                                            <div class="tools">
+                                                <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+                                                <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+                                                <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body ">
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                                    <div class="btn-group">
+                                                        <a href="/MedicalPath/DisplayListOfDoctorsInMap/@(ViewContext.RouteData.Values["id"])" id="addRow" class="btn btn-info">
+                                                            Add New <i class="fa fa-plus"></i>
+                                                        </a>
+                                                       
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                                    <div class="btn-group pull-right">
+                                                        <a class="btn deepPink-bgcolor  btn-outline dropdown-toggle" data-toggle="dropdown">
+                                                            Tools
+                                                            <i class="fa fa-angle-down"></i>
+                                                        </a>
+                                                        <ul class="dropdown-menu pull-right">
+                                                            <li>
+                                                                <a href="javascript:;">
+                                                                    <i class="fa fa-print"></i> Print
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="javascript:;">
+                                                                    <i class="fa fa-file-pdf-o"></i> Save as PDF
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="javascript:;">
+                                                                    <i class="fa fa-file-excel-o"></i> Export to Excel
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="table-scrollable">
+                                                <table class="table table-hover table-checkable order-column full-width" id="example4">
+                                                    <thead>
+                                                    
+                                                    <tr>
+                                                        <th></th>
+                                                        <th> Name </th>
+                                                        <th> Speciality </th>
+                                                        <th>  Order </th>
+                                                        <th> Address</th>
+                                                        <th> Mobile </th>
+                                                        <th> Email </th>
+                                                        <th>Paiment</th>
+                                                        <th> Action </th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    
+                                                    
+                                                    @foreach (var i in ViewBag.result)
+                                                    {
+                                                        if (k <= 1)
+                                                        {
+                                                            foreach (var j in i.doctorPath)
+                                                            {
+                                                                
+                                                            
+                                                                <tr class="odd gradeX"  data-pathdoctor="@Json.Encode(j.medicalVisit)" data-users="@Json.Encode(i.rendezVous.users)" data-date="@Json.Encode(i.rendezVous.dateRDV)" onclick="showVisit(this)">
+                                                                    <td class="patient-img">
+                                                                        <img src="@j.doctor.UrlPhoto" alt="doctor img">
+                                                                    </td>
+                                                                    <td>Dr. @j.doctor.firstName @j.doctor.lastName</td>
+                                                                    <td class="left">@j.doctor.speciality</td>
+                                                                    <td class="left">@j.ordre</td>
+                                                                    <td class="left">@j.doctor.state</td>
+                                                                    <td>
+                                                                        <a href="tel:@j.doctor.phoneNumber">
+                                                                            @j.doctor.phoneNumber
+                                                                        </a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="mailto:@j.doctor.email">
+                                                                            @j.doctor.email
+                                                                        </a>
+                                                                    </td>
+                                                                    <td class="left"><span>@j.doctor.tariff</span></td>
+                                                                    <td>
+                                                                        <a href="edit_doctor.html" class="btn btn-primary btn-xs">
+                                                                            <i class="fa fa-pencil"></i>
+                                                                        </a>
+                                                                        <button class="btn btn-danger btn-xs">
+                                                                            <i class="fa fa-trash-o "></i>
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                        k++;
+                                                    }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab2">
+                            <div class="row">
+                                @foreach (var i in ViewBag.result)
+                                {
+                                    if (k <= 1)
+                                    {
+                                        foreach (var j in i.doctorPath)
+                                        {
+                                                                
+                                            <div class="col-md-4">
+                                                <div class="card card-topline-aqua">
+                                                    <div class="card-body no-padding ">
+                                                        <div class="doctor-profile">
+                                                            <img src="@j.doctor.UrlPhoto" class="doctor-pic" alt="doctor img">
+                                                            <div class="profile-usertitle">
+                                                                <div class="doctor-name">Dr.@j.doctor.firstName @j.doctor.lastName </div>
+                                                                <div class="name-center">@j.doctor.speciality</div>
+                                                            </div>
+                                                            <p>@j.doctor.state <br/></p>
+                                                            <div>
+                                                                <p><i class="fa fa-phone"></i><a href="tel:(123)456-7890"> (123)456-7890</a></p> </div>
+                                                            <div class="profile-userbuttons">
+                                                                <a href="#" class="btn btn-circle deepPink-bgcolor btn-sm" data-pathdoctor="@Json.Encode(j.medicalVisit)" data-users="@Json.Encode(i.rendezVous.users)" data-date="@Json.Encode(i.rendezVous.dateRDV)" onclick="showVisit(this)">Read medical visit</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        }
+                                    }
+                                    k++;
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!---visit modal-->
+<div class="modal fade right" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="visit" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="white-box">
+                        <h3 id="matVisit"></h3>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="pull-left">
+                                    <address>
+                                        <img src="~/Content/ADMIN/img/logoDeep.png" style="width: 125px" alt="logo" class="logo-default" />
+                                        <p class="text-muted m-l-5">
+                                            DeepOr, <br>96bis Boulevard Raspail <br>
+                                            75006 Paris, <br>  FRANCE
+                                        </p>
+                                    </address>
+                                </div>
+                                <div class=" text-center" id="visitcontent">
+                                   
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <div id="descContent">
+                                   
+                                </div>
+                                <div class="pull-right">
+                                    <img src="~/Content/ADMIN/img/docSignature.png" style="width: 200px"  alt="signature doc" class="logo-default" />
+                                </div>
+                                <div class="clearfix"></div>
+                                <hr>
+                                <div class="text-right">
+                                    <button class="btn btn-danger" type="submit"> Generate as PDF </button>
+                                    <button onclick="javascript:window.print();" class="btn btn-default btn-outline" type="button"> <span><i class="fa fa-print"></i> Print</span> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           
+            </div>
+        </div>
+    </div> 
+</div>
+
+
+<script>
+
+    function showVisit(elem) {
+        var visit = $(elem).data('pathdoctor'), htmlContent = "", html2 = "";
+        var patient = $(elem).data('users')
+        var state = " ";
+        if (visit.medicalState == true) {
+            state = "Completed";
+        } else {
+            state = "In progress";
+        }
+        var date = new Date(visit.createdAt).toLocaleDateString();
+
+        var daterdv = $(elem).data('date')
+        var rdv = new Date(daterdv).toLocaleDateString();
+        //  console.log(elem1);
+        // var i = id;
+        //console.log(id);
+
+        //r description = " ";
+        // console.log("" + elem2 + "");
+
+        htmlContent = ` <address>
+                                        <p class="addr-font-h3">To,</p>
+                                        <p class="font-bold addr-font-h4">` +
+            patient.firstName +
+            ' ' +
+            patient.lastName +
+            `</p>
+
+                                        <p class="m-t-30">
+                                            <b>Visit Date :</b> <i class="fa fa-calendar"></i> ` +
+            date +
+            `
+                                        </p>
+                                        <p>
+                                            <b>Due Date (RDV): </b> <i class="fa fa-calendar"></i> ` +
+            rdv +
+            `
+                                        </p>
+                                    </address>`
+        html2 = `
+             <p class ="font-bold addr-font-h4">Description & status </p>
+                                    <p class ="font-bold addr-font-h6">
+                                      Description :  ` +
+            visit.description +
+            ` <br>
+                                        Status : ` +
+            state +
+            `
+                                    </p>`
+        $('#matVisit').html(`<b>Medical Visit</b> <span class="pull-right">#` + visit.id + `</span>`)
+        $('#visitcontent').html(htmlContent);
+        $('#descContent').html(html2);
+        $('#visit').modal();
+
+
+    }
+
+    var mymap = L.map('map').setView([51.505, -0.09], 13);
+  
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox.streets',
+        accessToken: 'pk.eyJ1IjoiaXNtYWlsMTk5NCIsImEiOiJjam90MDlxNmEwdG94M2twYWdyemdxMWJ1In0.papmvJruFCzp06NqaLVQcg'
+    }).addTo(mymap);
+</script>

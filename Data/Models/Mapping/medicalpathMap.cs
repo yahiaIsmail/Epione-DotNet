@@ -24,9 +24,7 @@ namespace Data.Models.Mapping
             this.Property(t => t.rendezVous_id).HasColumnName("rendezVous_id");
 
             // Relationships
-            this.HasOptional(t => t.rdv)
-                .WithMany(t => t.medicalpaths)
-                .HasForeignKey(d => d.rendezVous_id);
+            
 
         }
     }
