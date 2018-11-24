@@ -201,7 +201,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DemandViewModel.cs" />
+    <Compile Include="Models\DoctorPathViewModel.cs" />
+    <Compile Include="Models\DoctorViewModel.cs" />
+    <Compile Include="Models\MedicalPathViewModel.cs" />
+    <Compile Include="Models\MedicalVisitViewModel.cs" />
     <Compile Include="Models\PatientViewModel.cs" />
+    <Compile Include="Models\RdvForMedicalViewModel.cs" />
     <Compile Include="Models\RdvViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
