@@ -1,0 +1,128 @@
+﻿@model Web.Models.PatientViewModel
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    
+<main>
+    <div id="hero_register">
+        <div class="container margin_120_95">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h1>It's time to find you!</h1>
+                    <p class="lead">Te pri adhuc simul. No eros errem mea. Diam mandamus has ad. Invenire senserit ad has, has ei quis iudico, ad mei nonumes periculis.</p>
+                    <div class="box_feat_2">
+                        <i class="pe-7s-map-2"></i>
+                        <h3>Let patients to Find you!</h3>
+                        <p>Ut nam graece accumsan cotidieque. Has voluptua vivendum accusamus cu. Ut per assueverit temporibus dissentiet.</p>
+                    </div>
+                    <div class="box_feat_2">
+                        <i class="pe-7s-date"></i>
+                        <h3>Easly manage Bookings</h3>
+                        <p>Has voluptua vivendum accusamus cu. Ut per assueverit temporibus dissentiet. Eum no atqui putant democritum, velit nusquam sententiae vis no.</p>
+                    </div>
+                    <div class="box_feat_2">
+                        <i class="pe-7s-phone"></i>
+                        <h3>Instantly via Mobile</h3>
+                        <p>Eos eu epicuri eleifend suavitate, te primis placerat suavitate his. Nam ut dico intellegat reprehendunt, everti audiam diceret in pri, id has clita consequat suscipiantur.</p>
+                    </div>
+                </div>
+                <!-- /col -->
+                <div class="col-lg-5 ml-auto">
+                    <div class="box_form">
+                        <div id="message-register"></div>
+                        @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            if (ViewBag.result != null) { 
+                            <div class="alert alert-danger">
+                                @ViewBag.result
+                            </div>
+                            }
+                        <div class="form-horizontal">
+                            <hr />
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.firstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.firstName, new { htmlAttributes = new { @class = "form-control" } })
+
+                                    @Html.ValidationMessageFor(model => model.firstName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.lastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.lastName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.Raw(@Html.ValidationMessageFor(model => model.lastName, "", new { @class = "text-danger" }).ToHtmlString())
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.username, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.password, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", @type = "password"    } })
+                                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.validatePassword, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.validatePassword, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+                                    @Html.ValidationMessageFor(model => model.validatePassword, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="photo" class="control-label col-md-4">
+                                    Your Image
+                                </label>
+                                <div class="col-md-12">
+                                   @if (ViewBag.imageUpload != null)
+                                   {
+                                    <div class="alert alert-danger">
+                                    @ViewBag.imageUpload
+                                    </div>
+                                   }
+
+                                    <input type="file" id="photo" name="photo" class="form-control" accept="image/*" required/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-4 col-md-8">
+                                    <input type="submit" class="btn_1" value="Create" id="submit-register" />
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /hero_register -->
+</main>
+<!-- /main -->

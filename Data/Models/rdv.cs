@@ -12,7 +12,8 @@ namespace Data.Models
         public int id { get; set; }
         public bool confirmationDoc { get; set; }
         public bool confirmationPatient { get; set; }
-        public Nullable<long> dateRDV { get; set; }
+        //public Nullable<long> dateRDV { get; set; }
+        public DateTime dateRDV { get; set; }
         public Nullable<int> status { get; set; }
         public Nullable<int> doctors_id { get; set; }
         public Nullable<int> motif_id { get; set; }

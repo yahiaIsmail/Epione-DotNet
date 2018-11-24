@@ -35,7 +35,7 @@ namespace Data.Models
         public string paimentMethode { get; set; }
         public string password { get; set; }
         public int phoneNumber { get; set; }
-        public Nullable<int> role { get; set; }
+        public string role { get; set; }
         public string speciality { get; set; }
         public string state { get; set; }
         public string tariff { get; set; }

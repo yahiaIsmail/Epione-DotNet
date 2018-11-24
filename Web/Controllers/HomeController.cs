@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Mvc;
 using Data.Models;
 using Web.Models;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Web.Controllers
 {
@@ -35,8 +37,9 @@ namespace Web.Controllers
 
             u.email = collection["email"];
             u.password = collection["password"];
-
-
+            string str;
+            user us= new user();
+            JObject json;
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:18080/");
 
@@ -44,7 +47,32 @@ namespace Web.Controllers
             if (response.IsSuccessStatusCode)
             {
 
-                return RedirectToAction("Index");
+
+                str = response.Content.ReadAsStringAsync().Result;
+                json= JObject.Parse(str);
+                var result = JsonConvert.DeserializeObject<user>(str);
+                
+                Session["firstName"] = result.firstName;
+                Session["lastName"] = result.lastName;
+                Session["username"] = result.username;
+                Session["email"] = result.email;
+                Session["role"] = result.role;
+
+                ViewBag.result = Session["role"];
+                if (result.role.Equals("Admin"))
+                {
+                    return Redirect("../BackOfficeHome/Index");
+                }
+                else if (result.role.Equals("Patient"))
+                {
+                    return RedirectToAction("Index");
+                }
+                else if (result.role.Equals("Doctor"))
+                {
+                    return RedirectToAction("Index");
+                }
+                //ViewBag.result = Session["role"];
+
             }
             else
             {

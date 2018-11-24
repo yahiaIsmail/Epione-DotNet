@@ -1,6 +1,7 @@
 ﻿
 @{
-    Layout = null;
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_BackOfficeLayout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -33,7 +34,10 @@
 </head>
 
 <body>
+    <input type="button" value="Create" onclick="location.href='@Url.Action("pdfConverter", "Stat")'" />
+    <h1 style="color: red;">@ViewBag.confirmed</h1>
 
+    <h1 style="color: red;">@ViewBag.cancled</h1>
     <h2>Number of Freelancers VS number of resources</h2>
     <div id="charContainer">
         <canvas id="jobtype"></canvas>
@@ -44,29 +48,29 @@
     <script src="~/Content/js/jquery-2.2.4.min.js"></script>
     <script src="~/Content/js/bootstrap.min.js"></script>
     <script>
-            var oilCanvas = document.getElementById("jobtype");
-            var repArray=@Html.Raw(Json.Encode(ViewBag.REP));
-     @*//   var type=@Html.Raw(Json.Encode(ViewBag.type));*@
+        var oilCanvas = document.getElementById("jobtype");
+        @*var repArray=@Html.Raw(Json.Encode(ViewBag.REP));*@
+        @*//   var type=@Html.Raw(Json.Encode(ViewBag.type));*@
 
-       // var type=[123,23,54,3];
+        // var type=[123,23,54,3];
+        var repArray = [@ViewBag.confirmed, @ViewBag.cancled];
+        var oilData = {
+            labels: ['RDV Confirmed', 'RDV Cancled'],
+            datasets: [
+                {
+                    data: repArray,
+                    backgroundColor: [
+                      "#63FF84",
+                        "#FF6384"
 
-            var oilData = {
-                labels: ['Pigistes','Employees'],
-                datasets: [
-                    {
-                        data: repArray,
-                        backgroundColor: [
-                          "#63FF84"  ,
-                            "#FF6384"
+                    ]
+                }]
+        };
 
-                        ]
-                    }]
-            };
-
-            var pieChart = new Chart(oilCanvas, {
-                type: 'doughnut',
-                data: oilData
-            });
+        var pieChart = new Chart(oilCanvas, {
+            type: 'doughnut',
+            data: oilData
+        });
 
 
     </script>
