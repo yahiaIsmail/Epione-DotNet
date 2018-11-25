@@ -38,18 +38,7 @@ namespace Service.Stats
         public int getdoctornumber()
         {
             int docnumber = 0;
-            //System.Diagnostics.Debug.WriteLine("**********");
-            //var query = (from m in dbf.DataContext.user
-            //             select m.role).ToList();
-            //foreach(string element in query)
-            //{
-            //    System.Diagnostics.Debug.WriteLine(element);
-            //}
-            
-
-            //System.Diagnostics.Debug.WriteLine("**********");
-
-
+        
             var querydoctornum = (from m in dbf.DataContext.user
                                   where (m.role.Equals("2"))
                                   select m);

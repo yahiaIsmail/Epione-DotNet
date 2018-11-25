@@ -49,10 +49,7 @@
     <script src="~/Content/js/bootstrap.min.js"></script>
     <script>
         var oilCanvas = document.getElementById("jobtype");
-        @*var repArray=@Html.Raw(Json.Encode(ViewBag.REP));*@
-        @*//   var type=@Html.Raw(Json.Encode(ViewBag.type));*@
-
-        // var type=[123,23,54,3];
+       
         var repArray = [@ViewBag.confirmed, @ViewBag.cancled];
         var oilData = {
             labels: ['RDV Confirmed', 'RDV Cancled'],
