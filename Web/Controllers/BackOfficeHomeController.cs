@@ -2,8 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Mvc;
+using Web.Models;
 
 namespace Web.Controllers
 {
@@ -34,6 +37,21 @@ namespace Web.Controllers
             ViewBag.confirmed = confirmedCancledRDV[0];
             ViewBag.cancled = confirmedCancledRDV[1];
 
+
+            //get all demands 
+            HttpClient Client = new HttpClient();
+            Client.BaseAddress = new Uri("http://localhost:18080/");
+            Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response = Client.GetAsync("JAVAEE-web/rest/admin/demandes").Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                ViewBag.demands = response.Content.ReadAsAsync<IEnumerable<DemandViewModel>>().Result;
+            }
+            else
+            {
+                ViewBag.demands = "error";
+            }
 
             return View();
         }
