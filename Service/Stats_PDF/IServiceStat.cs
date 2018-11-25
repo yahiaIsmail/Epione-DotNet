@@ -11,6 +11,11 @@ namespace Service.Stats
     public interface IServiceStat :  IService<rdv>
     {
         List<int> getStat();
+        int getpatientnumber();
+        int getdoctornumber();
+        int getrdvnumber();
+        int getmedicalpathnumber();
+
     }
 
 }

@@ -19,10 +19,9 @@ namespace Service.Stats
         {
 
         }
-
-
-       public List<int> getStat()
+        public List<int> getStat()
         {
+            //get confirmed and cancled rdv
             List<int> stat = new List<int>();
             var queryConfirmed = (from m in dbf.DataContext.rdv
                                   where (m.status == 0)
@@ -33,6 +32,61 @@ namespace Service.Stats
             stat.Add(queryConfirmed.Count());
             stat.Add(queryCancled.Count());
             return stat;
+        }
+
+        //get doctors number
+        public int getdoctornumber()
+        {
+            int docnumber = 0;
+            //System.Diagnostics.Debug.WriteLine("**********");
+            //var query = (from m in dbf.DataContext.user
+            //             select m.role).ToList();
+            //foreach(string element in query)
+            //{
+            //    System.Diagnostics.Debug.WriteLine(element);
+            //}
+            
+
+            //System.Diagnostics.Debug.WriteLine("**********");
+
+
+            var querydoctornum = (from m in dbf.DataContext.user
+                                  where (m.role.Equals("2"))
+                                  select m);
+            docnumber = querydoctornum.Count();
+
+            return docnumber;
+        }
+
+        //get patient number
+        public int getpatientnumber()
+        {
+            int patientnumber = 0;
+            var querypatientnum = (from m in dbf.DataContext.user
+                                   where (m.role.Equals("1"))
+                                   select m);
+            patientnumber = querypatientnum.Count();
+            return patientnumber;
+        }
+
+        //get rdv number
+        public int getrdvnumber()
+        {
+            int rdvnumber = 0;
+            var queryrdvnum = (from m in dbf.DataContext.rdv
+                               select m);
+            rdvnumber = queryrdvnum.Count();
+            return rdvnumber;
+        }
+
+        //get medicalpath number
+        public int getmedicalpathnumber()
+        {
+            int medicalpathnum = 0;
+            var querymedicalpathnum = (from m in dbf.DataContext.medicalpath
+                                       select m);
+            medicalpathnum = querymedicalpathnum.Count();
+            return medicalpathnum;
         }
     }
 }
