@@ -16,6 +16,9 @@ namespace Service.Stats
         int getrdvnumber();
         int getmedicalpathnumber();
 
+        List<object> getrankdoc();
+        
+
     }
 
 }

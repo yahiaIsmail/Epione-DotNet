@@ -77,5 +77,30 @@ namespace Service.Stats
             medicalpathnum = querymedicalpathnum.Count();
             return medicalpathnum;
         }
+
+        public List<object> getrankdoc()
+        {
+            List<object> listuser = new List<object>();
+            var queryrank = (from m in dbf.DataContext.medicalvisit
+                             join p in dbf.DataContext.pathdoctors on m.pathDoctors_id equals p.id
+                             join u in dbf.DataContext.user on p.doctor_id equals u.id
+                             orderby m.rating descending
+                                       select new {
+                                            firstname = u.firstName,
+                                            lastname = u.lastName,
+                                            speciality = u.speciality,
+                                            rating = m.rating,
+                                            url = u.UrlPhoto
+
+                                       } )
+                                       .Take(3)
+                                       .ToList();
+            foreach(var element in queryrank)
+            {
+                listuser.Add(element);
+            }
+          //  listuser.Sort();
+            return listuser;
+        }
     }
 }

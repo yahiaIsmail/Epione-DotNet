@@ -91,14 +91,19 @@ namespace Service.Stats
             var queryPath = (from m in dbf.DataContext.rdv
                              join u in dbf.DataContext.user on m.doctors_id equals u.id
                              join mp in dbf.DataContext.medicalpath on m.id equals mp.rendezVous_id
+                             join p in dbf.DataContext.user on m.users_id equals p.id
                              where (u.email.Equals(email))
                              where (m.dateRDV.CompareTo(today) == 0)
-                             select mp.justification).ToList();
+                             select new {
+                                 firsName = p.firstName,
+                                 lastName = p.lastName,
+                                 justification = mp.justification
+                             }).ToList();
             //    select );
 
             y += 30;
             //Write the medical paths of today 
-            gfx.DrawString("Today's medical paths : ",
+            gfx.DrawString("Today's justifications : ",
             font, XBrushes.Black, x, y);
 
             foreach (object e in queryPath)

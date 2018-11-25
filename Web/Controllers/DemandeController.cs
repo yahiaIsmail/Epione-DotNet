@@ -95,7 +95,10 @@ namespace Web.Controllers
         {
             System.Diagnostics.Debug.WriteLine("******* email ********");
             System.Diagnostics.Debug.WriteLine(email);
-            return View();
+
+            
+
+                return View();
         }
 
         [HttpPost]
@@ -106,6 +109,8 @@ namespace Web.Controllers
             System.Diagnostics.Debug.WriteLine(email);
 
             DemandViewModel d = new DemandViewModel();
+
+
 
             d.email = email;
 

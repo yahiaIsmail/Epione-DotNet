@@ -126,60 +126,45 @@
             <div class="col-md-4 col-sm-12">
                 <div class="card  card-box">
                     <div class="card-head">
-                        <header>USER'S LIST</header>
+                        <header>TOP RANK DOCTOR</header>
                         <div class="tools">
                             <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
                             <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
                             <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
                         </div>
                     </div>
-                    <div class="card-body no-padding height-9">
+                    <div class="card-body no-padding height-auto">
                         <div class="row">
                             <ul class="docListWindow">
+                              @foreach (var r in ViewBag.rankDoc)
+                              {
                                 <li>
                                     <div class="prog-avatar">
-                                        <img src="img/doc/doc1.jpg" alt="" width="40" height="40">
+                                        <img src="@r.url" alt="" width="40" height="40">
                                     </div>
                                     <div class="details">
                                         <div class="title">
-                                            <a href="#">Dr.Rajesh</a> -(MBBS,MD)
+                                            <a href="#">Dr. @r.firstName @r.lastName</a> 
                                         </div>
                                         <div>
-                                            <span class="clsAvailable">Available</span>
+                                            <span style="color: red">@r.speciality</span>
+                                        </div>
+                                        <div>
+                                          <span  class="clsAvailable">rating : @r.rating /10</span>
                                         </div>
                                     </div>
                                 </li>
-                                <li>
-                                    <div class="prog-avatar">
-                                        <img src="img/doc/doc2.jpg" alt="" width="40" height="40">
-                                    </div>
-                                    <div class="details">
-                                        <div class="title">
-                                            <a href="#">Dr.Sarah Smith</a> -(MBBS,MD)
-                                        </div>
-                                        <div>
-                                            <span class="clsAvailable">Available</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="prog-avatar">
-                                        <img src="img/doc/doc3.jpg" alt="" width="40" height="40">
-                                    </div>
-                                    <div class="details">
-                                        <div class="title">
-                                            <a href="#">Dr.John Deo</a> - (BDS,MDS)
-                                        </div>
-                                        <div>
-                                            <span class="clsNotAvailable">Not Available</span>
-                                        </div>
-                                    </div>
-                                </li>
+                              }
+                                
+                               
+                                
+                               
+                                
                                 
                             </ul>
-                            <div class="text-center full-width">
+                            @*<div class="text-center full-width">
                                 <a href="#">View all</a>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                 </div>
@@ -212,8 +197,7 @@
                                             <th>Last name</th>
                                             <th>Speciality</th>
                                             <th>State</th>
-                                            <th>Room No</th>
-                                            <th>Edit</th>
+                                            <th>Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -226,8 +210,8 @@
                                                 <td>@p.lastName</td>
                                                 <td>@p.state</td>
                                                 <td>@p.speciality</td>
-                                                <td>@Html.ActionLink("Delete", "Delete", new { email = p.email })</td>
-                                                <td><a href="javascript:void(0)" class="" data-toggle="tooltip" title="Edit"><i class="fa fa-check"></i></a> <a href="javascript:void(0)" class="text-inverse" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></a></td>
+                                                <td style="color: red;">@Html.ActionLink("Delete", "Delete", new { email = p.email })</td>
+                                                @*<td><a href="javascript:void(0)" class="" data-toggle="tooltip" title="Edit"><i class="fa fa-check"></i></a> <a href="javascript:void(0)" class="text-inverse" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></a></td>*@
 
                                             </tr>
                                         }
