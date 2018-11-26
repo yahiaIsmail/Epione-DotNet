@@ -17,6 +17,8 @@ namespace Web.Controllers
         // GET: DoctorHome
         public ActionResult Index()
         {
+            if(!string.IsNullOrEmpty(Session["firstName"] as string))
+            {
             //get doctors number 
             ViewBag.doctornumber = statService.getdoctornumber();
 
@@ -41,15 +43,18 @@ namespace Web.Controllers
             string output = JsonConvert.SerializeObject(listuser);
             List<rankdoc> rankdoclist = JsonConvert.DeserializeObject<List<rankdoc>>(output);
             ViewBag.rankDoc = rankdoclist;
-
-
-            
-
+                
             return View();
+            }
+            else
+            {
+                return Redirect("../Home/Login");
+            }
         }
         public ActionResult pdfConverter()
         {
             string email = "moez.haddad@esprit.tn";
+          
             pdfService.convertPDF(email);
             return RedirectToAction("Index");
         }

@@ -22,8 +22,12 @@ namespace Web.Controllers
         // GET: BackOfficeHome
         public ActionResult Index()
         {
-            //get doctors number 
-            ViewBag.doctornumber = statService.getdoctornumber();
+            if (!string.IsNullOrEmpty(Session["firstName"] as string))
+            {
+
+            
+                //get doctors number 
+                ViewBag.doctornumber = statService.getdoctornumber();
             
 
             //get patient number
@@ -74,6 +78,11 @@ namespace Web.Controllers
             }
 
             return View();
+            }
+            else
+            {
+                return Redirect("../Home/Login");
+            }
         }
         public ActionResult Delete(String email)
         {
