@@ -81,6 +81,17 @@ namespace Service.Stats
         public List<object> getrankdoc()
         {
             List<object> listuser = new List<object>();
+
+            //var query = (from m in dbf.DataContext.medicalvisit
+            //             select m).ToList();
+
+            //foreach(medicalvisit e in query)
+            //{
+            //    System.Diagnostics.Debug.WriteLine("*************");
+
+            //    System.Diagnostics.Debug.WriteLine(e);
+            //}
+
             var queryrank = (from m in dbf.DataContext.medicalvisit
                              join p in dbf.DataContext.pathdoctors on m.pathDoctors_id equals p.id
                              join u in dbf.DataContext.user on p.doctor_id equals u.id
@@ -93,6 +104,7 @@ namespace Service.Stats
                                             url = u.UrlPhoto
 
                                        } )
+                                       //.GroupBy( u => u.rating)
                                        .Take(3)
                                        .ToList();
             foreach(var element in queryrank)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SpeechLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -47,18 +48,25 @@ namespace Web.Controllers
             return View();
             
         }
+
+        public ActionResult VoiceExplanation()
+        {
+            SpVoice spv = new SpVoice();
+            spv.Speak("good morning, i'm a robot which will explain to you how to create a demand and what will happen after that, first of all you should enter your data in the form, after that your demand will be sent to the administrator, if he decline an email will be sent to you explaining the reason. And if he accepts an email contaning a password which saved encrypted in the database will be sent to your mail address. PS you only have one demand before the accept or refuse of your demand");
+            return RedirectToAction("CreateDemand");
+
+        }
         [HttpGet]
         public ActionResult CreateDemand()
         {
-
-            return View();
-
+           return View();
+            
         }
 
         [HttpPost]
         public ActionResult CreateDemand(FormCollection collection)
         {
-
+           
             DemandViewModel d = new DemandViewModel();
 
             d.email = collection["email"];

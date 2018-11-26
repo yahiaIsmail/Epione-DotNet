@@ -93,9 +93,14 @@
                                     </div>
                                 </div>
                                
-                                <div class="col-md-offset-2 col-md-10">
-                                    <input type="submit" value="Create" class="btn btn-default" />
+                                <div class="col-md-offset-2 col-md-12">
+                                    <input type="submit" value="Create" class="btn btn-succes" />
+                                    <span style="color: green;">
+
+                                        @Html.ActionLink("Voice explanation", "VoiceExplanation", "Demande", null, new { @class = "btn btn-primary" })
+                                    </span>
                                 </div>
+                                
                               
                             </form>
                         </div>

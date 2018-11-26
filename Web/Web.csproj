@@ -204,7 +204,7 @@
     <Compile Include="Models\DoctorPathViewModel.cs" />
     <Compile Include="Models\DoctorViewModel.cs" />
     <Compile Include="Models\MedicalPathViewModel.cs" />
-	<Compile Include="Models\MotifViewModel.cs" />
+    <Compile Include="Models\MotifViewModel.cs" />
     <Compile Include="Models\MedicalVisitViewModel.cs" />
     <Compile Include="Models\PatientViewModel.cs" />
     <Compile Include="Models\rankdoc.cs" />
@@ -1048,6 +1048,17 @@
       <Project>{08f7b2a8-4b00-4e46-a8ce-1760a2d5c997}</Project>
       <Name>Service</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="SpeechLib">
+      <Guid>{C866CA3A-32F7-11D2-9602-00C04F8EE628}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>4</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

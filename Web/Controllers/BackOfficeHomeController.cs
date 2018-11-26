@@ -47,13 +47,13 @@ namespace Web.Controllers
             List<rankdoc> rankdoclist= JsonConvert.DeserializeObject<List<rankdoc>>(output);
             ViewBag.rankDoc = rankdoclist;
 
-            foreach(rankdoc e in rankdoclist)
-            {
-                System.Diagnostics.Debug.WriteLine(e.firstName);
-                System.Diagnostics.Debug.WriteLine(e.lastName);
-                System.Diagnostics.Debug.WriteLine(e.speciality);
-                System.Diagnostics.Debug.WriteLine(e.rating);
-            }
+            //foreach(rankdoc e in rankdoclist)
+            //{
+            //    System.Diagnostics.Debug.WriteLine(e.firstName);
+            //    System.Diagnostics.Debug.WriteLine(e.lastName);
+            //    System.Diagnostics.Debug.WriteLine(e.speciality);
+            //    System.Diagnostics.Debug.WriteLine(e.rating);
+            //}
 
 
 
@@ -92,7 +92,6 @@ namespace Web.Controllers
             {
                 str = response.Content.ReadAsStringAsync().Result;
                 var result = JsonConvert.DeserializeObject<DemandViewModel>(str);
-                //  ViewBag.result = result;
                 ViewBag.email = result.email;
                 ViewBag.firstName = result.firstName;
                 ViewBag.lastName = result.lastName;
