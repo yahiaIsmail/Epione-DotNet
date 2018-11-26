@@ -108,9 +108,11 @@
                                 @if (!string.IsNullOrEmpty(Session["firstName"] as string))
                                 {
                                     <li>
+                                        
                                         <span style="color: red;">
                                             Welcome @Session["firstName"]
                                         </span>
+                                        <img alt="" class="rounded" style="width:40px; height:40px;" src=@Session["url"] />
                                     </li>
                                 }
                                 

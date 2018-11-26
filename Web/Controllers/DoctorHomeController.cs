@@ -53,9 +53,8 @@ namespace Web.Controllers
         }
         public ActionResult pdfConverter()
         {
-            string email = "moez.haddad@esprit.tn";
           
-            pdfService.convertPDF(email);
+            pdfService.convertPDF((string)Session["email"]);
             return RedirectToAction("Index");
         }
 

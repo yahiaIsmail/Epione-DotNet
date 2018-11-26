@@ -57,6 +57,7 @@ namespace Web.Controllers
                 Session["username"] = result.username;
                 Session["email"] = result.email;
                 Session["role"] = result.role;
+                Session["url"] = result.UrlPhoto;
 
                 ViewBag.result = Session["role"];
                 if (result.role.Equals("Admin"))
