@@ -63,7 +63,7 @@ namespace Web.Controllers
 
             if (responseMotif.IsSuccessStatusCode)
             {
-                ViewBag.motifs = responseMotif.Content.ReadAsAsync<IEnumerable<DemandViewModel>>().Result;
+                ViewBag.motifs = responseMotif.Content.ReadAsAsync<IEnumerable<MotifRdvModel>>().Result;
             }
             else
             {
@@ -84,11 +84,47 @@ namespace Web.Controllers
             {
                 // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+                //HttpClient clientAdd = new HttpClient();
+                //clientAdd.BaseAddress = new Uri("http://127.0.0.1:18080/");
+                //HttpResponseMessage responseAdd;
+                //responseAdd = clientAdd.PostAsJsonAsync<PatientModel>("JAVAEE-web/rest/users/addPatient", patientModel).Result;
+                //if (responseAdd.IsSuccessStatusCode)
+                //{
+                //    return RedirectToAction("ConfirmRegister", new { email = patient.email });
+                //}
+                //else
+                //{
+                //    ViewBag.result = "An error occured please try again";
+                //    return View(patient);
+                //}
+
+                RdvViewModel rdv = new RdvViewModel();
+                rdv.emailDoctor = "kais.bettaieb@esprit.tn";
+                rdv.emailPatient = collection["emailPatient"];
+                rdv.motifId = Convert.ToInt32(collection["motifId"]);
+                DateTime dt = Convert.ToDateTime(collection["booking_time"]);
+                string s = collection["booking_date"];
+                String[] dates = s.Split('/');
+                rdv.dateRdv =  new DateTime(Convert.ToInt32(dates[2]), Convert.ToInt32(dates[0]), Convert.ToInt32(dates[1]), dt.Hour, dt.Minute, dt.Second);
+
+                HttpClient clientAdd = new HttpClient();
+                clientAdd.BaseAddress = new Uri("http://127.0.0.1:18080/");
+                HttpResponseMessage responseAdd;
+                responseAdd = clientAdd.PostAsync
+                    ("JAVAEE-web/rest/rdv/takeRdv/"+rdv.emailPatient + "/"+rdv.emailDoctor+"/"+rdv.motifId+"/"+rdv.dateRdv.Year+"/"+rdv.dateRdv.Month+"/"+rdv.dateRdv.Day+"/"+rdv.dateRdv.Hour+"/"+rdv.dateRdv.Minute,null).Result;
+                if (responseAdd.IsSuccessStatusCode)
+                {
+                    return Content("added");
+                }
+                else
+                {
+
+                    return Content("error") ;
+                }
             }
             catch
             {
-                return View();
+                return Content("error");
             }
         }
 

@@ -82,7 +82,7 @@
                                     <ul class="bullets">
                                         @foreach (var p in ViewBag.motifs)
                                         {
-                                            <li>@p.id</li>
+                                            <li>@p.description</li>
                                     }
                                         </ul>
                                     </div>
@@ -297,69 +297,51 @@
                     </div>
                     <div id="message-booking"></div>
 
-                    @using (Html.BeginForm())
+                    @using (Html.BeginForm("Create", "Rdv"))
                     {
                         @Html.AntiForgeryToken()
 
-                        <div class="form-horizontal">
+                    <div class="form-horizontal">
 
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.emailPatient, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.emailPatient, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.emailPatient, "", new { @class = "text-danger" })
-                                </div>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.emailPatient, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.emailPatient, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.emailPatient, "", new { @class = "text-danger" })
                             </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.motifId, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.motifId, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.motifId, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.dateRdv, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.dateRdv, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.dateRdv, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-                            <hr>
-                            <div style="position:relative;"><input type="submit" class="btn_1 full-width" value="Book Now" id="submit-booking"></div>
                         </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.motifId, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(m => m.motifId, new SelectList(ViewBag.motifs, "id", "description"), "  Please select a Motif  ", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.motifId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+               
+                        <!-- /row -->
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <input class="form-control" type="text" id="booking_date" name="booking_date" data-lang="en" data-min-year="2017" data-max-year="2020" data-disabled-days="10/17/2017,11/18/2017">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <input class="form-control" type="text" id="booking_time" name="booking_time">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /row -->
+                        <hr>
+                        <div style="position:relative;"><input type="submit" class="btn_1 full-width" value="Book Now" id="submit-booking"></div>
+                    </div>
                     }
 
-                    <!-- /row -->
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-group">
-                                <input class="form-control" type="text" id="booking_date" name="booking_date" data-lang="en" data-min-year="2017" data-max-year="2020" data-disabled-days="10/17/2017,11/18/2017">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                <input class="form-control" type="text" id="booking_time" name="booking_time">
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /row -->
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <select class="form-control" name="booking_visit" id="booking_visit">
-                                    <option value="">Select visit</option>
-                                    <option value="General visit">General visit</option>
-                                    <option value="Cardiothoracic Radiology">Cardiothoracic Radiology</option>
-                                    <option value="Abdominal Radiology">Abdominal Radiology</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /row -->
+                  
+                    
                 </div>
                 <!-- /box_general -->
             </aside>
