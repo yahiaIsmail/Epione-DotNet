@@ -135,6 +135,11 @@ namespace Web.Controllers
 
 
         }
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return Redirect("../Home/Index");
+        }
 
 
     }

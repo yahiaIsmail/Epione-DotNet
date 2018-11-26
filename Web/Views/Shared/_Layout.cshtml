@@ -87,7 +87,16 @@
                                 <li>
                                     <span>
 
-                                        @Html.ActionLink("Login", "Login", "Home")
+                                        @if (!string.IsNullOrEmpty(Session["firstName"] as string))
+                                        {
+                                            @Html.ActionLink("Logout", "Logout", "Home")
+                                        }
+                                        @if (string.IsNullOrEmpty(Session["firstName"] as string))
+                                        {
+                                             @Html.ActionLink("Login", "Login", "Home")
+                                        }
+
+                                       
                                     </span>
 
                                 </li>

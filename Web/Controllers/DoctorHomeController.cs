@@ -52,7 +52,12 @@ namespace Web.Controllers
             string email = "moez.haddad@esprit.tn";
             pdfService.convertPDF(email);
             return RedirectToAction("Index");
-            // return View();
+        }
+
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return Redirect("../Home/Index");
         }
     }
 }

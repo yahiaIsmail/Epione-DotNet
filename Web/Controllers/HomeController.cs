@@ -69,7 +69,7 @@ namespace Web.Controllers
                 }
                 else if (result.role.Equals("Doctor"))
                 {
-                    return RedirectToAction("Index");
+                    return Redirect("../DoctorHome/Index");
                 }
                 //ViewBag.result = Session["role"];
 
@@ -82,7 +82,11 @@ namespace Web.Controllers
             return View();
         }
 
-
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Login");
+        }
 
         public ActionResult Register()
         {
