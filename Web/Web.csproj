@@ -191,6 +191,7 @@
     <Compile Include="Controllers\DemandeController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
     <Compile Include="Controllers\ConversationController.cs" />
+    <Compile Include="Controllers\DoctorHomeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MedicalPathController.cs" />
     <Compile Include="Controllers\Motif2Controller.cs" />
@@ -781,6 +782,8 @@
     <Content Include="Views\MedicalPath\Create.cshtml" />
     <Content Include="Views\MedicalPath\DisplayListOfDoctorsInMap.cshtml" />
     <Content Include="Views\BackOfficeHome\Delete.cshtml" />
+    <Content Include="Views\Shared\_LayoutDoctor.cshtml" />
+    <Content Include="Views\DoctorHome\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
