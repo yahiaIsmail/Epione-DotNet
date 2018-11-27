@@ -5,7 +5,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_BackOfficeLayout.cshtml";
-    
+
 }
 
 
@@ -49,7 +49,7 @@
                                     <a href="/MedicalPath/Create" class="btn btn-info">
                                         Add new <i class="fa fa-plus"></i>
                                     </a>
-                                    
+
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
@@ -81,95 +81,98 @@
                         <div class="table-scrollable">
                             <table class="table table-hover table-checkable order-column full-width" id="example4">
                                 <thead>
-                                <tr>
-                                    <th>Path N°</th>
-                                    <th>justification</th>
-                                    <th>Active </th>
-                                    <th> Date RDV </th>
-                                    <th> Creation Date </th>
-                                    <th> Status </th>
-                                    <th> Patient Email </th>
-                                    <th>Doc° assigned</th>
-                                    <th> Action </th>
-                                </tr>
+                                    <tr>
+                                        <th>Path N°</th>
+                                        <th>justification</th>
+                                        <th>Active </th>
+                                        <th> Date RDV </th>
+                                        <th> Creation Date </th>
+                                        <th> Status </th>
+                                        <th> Patient Email </th>
+                                        <th>Doc° assigned</th>
+                                        <th> Action </th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr class="odd gradeX">
+                                    <tr class="odd gradeX">
 
 
-                                    @foreach (var j in ViewBag.result)
-                                    {
-                                        <td class="center">@j.id</td>
-                                        <td class="center">@j.justification</td>
-                                        if (@j.active == false)
+                                        @foreach (var j in ViewBag.result)
                                         {
-                                            <td class="center">Disabled</td>
-                                        }
+                                            <td class="center">@j.id</td>
+                                            <td class="center">@j.justification</td>
+                                            if (@j.active == false)
+                                            {
+                                                <td class="center">Disabled</td>
+                                            }
 
-                                        else
-                                        {
-                                            <td class="center">Enabled</td>
-                                        }
-                                        DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc)
-                                            .AddMilliseconds(@j.rendezVous.dateRDV).ToLocalTime();
-                                        <td class="center">
+                                            else
+                                            {
+                                                <td class="center">Enabled</td>
+                                            }
+                                            DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc)
+                                                .AddMilliseconds(@j.rendezVous.dateRDV).ToLocalTime();
+                                            <td class="center">
 
-                                            @dtDateTime.ToString("d")
-                                        </td>
-                                        DateTime dtDateTime1 = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc)
-                                            .AddMilliseconds(@j.createdAt).ToLocalTime();
-                                        <td class="center">
-                                            @dtDateTime1.ToString("d")
-                                        </td>
-
-                                        if (@j.status == true)
-                                        {
-                                            
-                                            <td class="center"><button type="button" class="btn btn-circle btn-warning">Completed</button></td>
-                                        }
-
-                                        else
-                                        {
-                                            <td class="center"><button type="button" class="btn btn-circle btn-warning">InProgress</button></td>
-                                        }
-                                        <td class="center">
-
-                                    <a href="mailto:@j.rendezVous.users.email">
-                                        @j.rendezVous.users.email </a>
-                                        </td>
-                                       
-                                        <td class="center">
-                                            <button data-toggle="button" class="btn btn-primary" value="Assign"
-                                                    data-pathdoctor="@Json.Encode(j.doctorPath)" onclick="showDocs(this)"><i class="fa fa-user "></i> @j.doctorPath.Count</button>
+                                                @dtDateTime.ToString("d")
                                             </td>
-                                     
-                                        if (@j.active == true)
-                                        {
-                                            <td >
-                                                <a class="btn btn-primary btn-xs" onclick="a()">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-                                                <a href="/MedicalPath/addDoctorsTo/@j.id" title="Add doctors to the patient path" class="btn btn-success btn-xs">
-                                                    <i class="fa fa-plus "></i>
+                                            DateTime dtDateTime1 = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc)
+                                                .AddMilliseconds(@j.createdAt).ToLocalTime();
+                                            <td class="center">
+                                                @dtDateTime1.ToString("d")
+                                            </td>
+
+                                            if (@j.status == true)
+                                            {
+
+                                                <td class="center"><button type="button" class="btn btn-circle btn-warning">Completed</button></td>
+                                            }
+
+                                            else
+                                            {
+                                                <td class="center"><button type="button" class="btn btn-circle btn-warning">InProgress</button></td>
+                                            }
+                                            <td class="center">
+
+                                                <a href="mailto:@j.rendezVous.users.email">
+                                                    @j.rendezVous.users.email
                                                 </a>
                                             </td>
 
-                                        }
-                                        else
-                                        {
-                                            <td hidden="true">
-                                                <a class="btn btn-primary btn-xs">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-                                                <a class="btn btn-success btn-xs">
-                                                    <i class="fa fa-plus "></i>
-                                                </a>
+                                            <td class="center">
+                                                <button data-toggle="button" class="btn btn-primary" value="Assign"
+                                                        data-pathdoctor="@Json.Encode(j.doctorPath)" onclick="showDocs(this)">
+                                                    <i class="fa fa-user "></i> @j.doctorPath.Count
+                                                </button>
                                             </td>
+
+                                            if (@j.active == true)
+                                            {
+                                                <td>
+                                                    <a class="btn btn-primary btn-xs" onclick="a()">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
+                                                    <a href="/MedicalPath/addDoctorsTo/@j.id" title="Add doctors to the patient path" class="btn btn-success btn-xs">
+                                                        <i class="fa fa-plus "></i>
+                                                    </a>
+                                                </td>
+
+                                            }
+                                            else
+                                            {
+                                                <td hidden="true">
+                                                    <a class="btn btn-primary btn-xs">
+                                                        <i class="fa fa-pencil"></i>
+                                                    </a>
+                                                    <a class="btn btn-success btn-xs">
+                                                        <i class="fa fa-plus "></i>
+                                                    </a>
+                                                </td>
+                                            }
+
                                         }
 
-                                    }
-
-                                </tr>
+                                    </tr>
 
                                 </tbody>
                             </table>
@@ -181,37 +184,31 @@
     </div>
 </div>
 <!--------------------MODAL display doctors in path-->
-
-
 <!-- Modal: modalQuickView -->
 <div class="modal fade" id="DocInPath" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true" data-keyboard="false" data-backdrop="static" style="margin-top: 10em">
     <div class="modal-dialog col-md-6 col-sm-6 " role="document">
-       
-           
-               <div class="modal-content">
-               
-                    <div class="card-head">
-                        <header>DOCTORS LIST</header>
-                        <div class="tools">
-                            <a class="t-close btn-color fa fa-times"   data-dismiss="modal"></a>
-                        </div>
-                    </div>
-                    <div class="card-body no-padding height-9">
-                        <div class="row">
-                            <ul class="docListWindow" id="contentOfDoc">
-                               
-                               
-                         
-                            </ul>
-                            
-                        </div>
-                    </div>
+
+
+        <div class="modal-content">
+
+            <div class="card-head">
+                <header>DOCTORS LIST</header>
+                <div class="tools">
+                    <a class="t-close btn-color fa fa-times" data-dismiss="modal"></a>
                 </div>
-               </div>
-    
-       
+            </div>
+            <div class="card-body no-padding height-9">
+                <div class="row">
+                    <ul class="docListWindow" id="contentOfDoc"></ul>
+
+                </div>
+            </div>
+        </div>
     </div>
+
+
+</div>
 
 <!--------end Modal -->
 <!-- Top Right  -->
@@ -227,14 +224,12 @@
             <div class="modal-body">
                 <div class="card card-topline-aqua">
                     <div class="card-body no-padding height-9">
-                        
+
                         <div class="profile-usertitle">
                             <div class="profile-usertitle-name"> Jayna Patil </div>
                             <div class="profile-usertitle-job"> Nurse </div>
                         </div>
-                        <ul class="list-group list-group-unbordered" id="visitcontent">
-                           
-                        </ul>
+                        <ul class="list-group list-group-unbordered" id="visitcontent"></ul>
                         <!-- END SIDEBAR USER TITLE -->
                         <!-- SIDEBAR BUTTONS -->
                         <div class="profile-userbuttons">
@@ -251,85 +246,105 @@
             </div>
         </div>
     </div>
-</div> 
-<script>
-    function a() {
-        swal(
-            'Good job!',
-            'You clicked the button!',
-            'success'
-        );
-    }
-    function showDocs(elem) {
-        var id = $(elem).data('pathdoctor'), htmlContent = "";
-            
-        console.log(id);
+</div>
+@section scripts{
+    <script>
+        function a() {
+            swal(
+                'Good job!',
+                'You clicked the button!',
+                'success'
+            );
+        }
 
-        id.map(e => {
-            htmlContent += `<li>
+        function showDocs(elem) {
+            var id = $(elem).data('pathdoctor'), htmlContent = "";
+
+            console.log(id);
+
+            id.map(e => {
+                htmlContent += `<li>
             <div class="prog-avatar">
             <img src= "` +
-                e.doctor.UrlPhoto +
-                `" alt="">
+                    e.doctor.UrlPhoto +
+                    `" alt="">
             </div>
             <div class="details">
             <div class="doctitle">
             <a href="#">` +
-                e.doctor.firstName + " " + e.doctor.firstName +
-                `</a> (` + e.doctor.speciality + `)&nbsp &nbsp &nbsp
-                <a class ="btn btn-primary btn-xs" title="medical visit" id= "`+e.medicalVisit.id+`" value= "`+e.medicalVisit.description+`"
-                onclick= "showVisit(`+e.medicalVisit.createdAt+`,`+e.medicalVisit.medicalState+`,'`+e.medicalVisit.des+`')" >
+                    e.doctor.firstName +
+                    " " +
+                    e.doctor.firstName +
+                    `</a> (` +
+                    e.doctor.speciality +
+                    `)&nbsp &nbsp &nbsp
+                <a class ="btn btn-primary btn-xs" title="medical visit" id= "` +
+                    e.medicalVisit.id +
+                    `" value= "` +
+                    e.medicalVisit.description +
+                    `"
+                onclick= "showVisit(` +
+                    e.medicalVisit.createdAt +
+                    `,` +
+                    e.medicalVisit.medicalState +
+                    `,'` +
+                    e.medicalVisit.des +
+                    `')" >
                 <i class ="fa fa-bookmark"></i>
                 </a>
             </div>
               <div>
 
-            <span class ="doctitle">Order In Path: ` +" "+
-                 e.ordre +
-                `</span>
+            <span class ="doctitle">Order In Path: ` +
+                    " " +
+                    e.ordre +
+                    `</span>
             </div>
             <div>
 
             <span class ="clsAvailable">` +
-              e.doctor.email +`
+                    e.doctor.email +
+                    `
                 </span>
             </div>
-              
+
             </div>
             </li>`
-        });
-        $("#contentOfDoc").html(htmlContent);
-       
-       
-       
-       
-     $('#DocInPath').modal();
-    }
+            });
+            $("#contentOfDoc").html(htmlContent);
 
-    function showVisit(elem1,elem2,id) {
-        console.log(elem1);
-        var i = id;
-        console.log(id);
 
-        //r description = " ";
-        console.log(""+elem2+"");
-       
-       var htmlContent = `<li class="list-group-item">
-           <b> Description </b> <a class="pull-right">`+
-           id +
-           `</a>
+            $('#DocInPath').modal();
+        }
+
+        function showVisit(elem1, elem2, id) {
+            console.log(elem1);
+            var i = id;
+            console.log(id);
+
+            //r description = " ";
+            console.log("" + elem2 + "");
+
+            var htmlContent = `<li class="list-group-item">
+           <b> Description </b> <a class="pull-right">` +
+                id +
+                `</a>
            </li>
            <li class="list-group-item">
-           <b>Medical State</b> <a class="pull-right">`+elem2+`</a>
+           <b>Medical State</b> <a class="pull-right">` +
+                elem2 +
+                `</a>
            </li>
            <li class="list-group-item">
-           <b>Date of Creation</b> <a class="pull-right">`+elem1+`</a>
+           <b>Date of Creation</b> <a class="pull-right">` +
+                elem1 +
+                `</a>
            </li>`
-       $('#visitcontent').html(htmlContent)
-        $('#visit').modal();
-       
-       
+            $('#visitcontent').html(htmlContent)
+            $('#visit').modal();
 
-    }
-    
-</script>
+
+        }
+
+    </script>
+}

@@ -1,54 +1,161 @@
-﻿@model Web.Models.MedicalPathViewModel 
+﻿@using Newtonsoft.Json
+@model IEnumerable<Web.Models.DoctorViewModel>
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "List Of doctors to add in path";
     Layout = "~/Views/Shared/_BackOfficeLayout.cshtml";
 }
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
       integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-      crossorigin=""/>
+      crossorigin="" />
 <!-- Make sure you put this AFTER Leaflet's CSS -->
 <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
         integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
         crossorigin=""></script>
 
 <div class="page-content-wrapper">
-<div class="page-content">
-    <div class="page-bar">
-        <div class="page-title-breadcrumb">
-            <div class=" pull-left">
-                <div class="page-title">Patient Profile</div>
+    <div class="page-content">
+        <div class="page-bar">
+            <div class="page-title-breadcrumb">
+                <div class=" pull-left">
+                    <input id="idPathPatient" value="@ViewBag.idPath" hidden="true" />
+
+                    <div class="page-title">Medical path for patient</div>
+                </div>
+                <ol class="breadcrumb page-breadcrumb pull-right">
+                    <li>
+                        <i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="#">MedicalPath</a>&nbsp;<i class="fa fa-angle-right"></i>
+                    </li>
+                    <li>
+                        <a class="parent-item" href="#">Pathdoctors</a>&nbsp;<i class="fa fa-angle-right"></i>
+                    </li>
+                    <li class="active">Patient</li>
+                </ol>
             </div>
-            <ol class="breadcrumb page-breadcrumb pull-right">
-                <li>
-                    <i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="index.html">Home</a>&nbsp;<i class="fa fa-angle-right"></i>
-                </li>
-                <li>
-                    <a class="parent-item" href="#">Patients</a>&nbsp;<i class="fa fa-angle-right"></i>
-                </li>
-                <li class="active">Patient Profile</li>
-            </ol>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 col-xs-12">
-            <div class="white-box">
-                <input  type="text"/>
-                <div class="cardbox">
-                    <div class="header">
-                        <h4 class="font-bold">ABOUT PATIENT</h4>
+        <div class="row">
+            <div class="col-md-4 col-xs-12">
+                <div class="white-box">
+                    <div>
+                        <input type="text" onkeypress="autocompelte()" id="tags" class="form-control" placeholder="Doctor speciality">
+                        <button style="margin-left: 60px;margin-top: 5px" class="btn btn-info m-r-20" onclick="searchdoctorsBySpeciality()">Search</button>
                     </div>
+
+                    <div class="cardbox">
+                        <div class="header" style="display: flex;">
+                            <h4 class="font-bold"> ABOUT DOCTOR </h4>
+                            <button type="button" onclick="addDoctorTopath()" id="submitdoc" class="btn btn-circle btn-success"><i class="fa fa-plus-circle"></i> Add </button>
+                        </div>
+                        <div class="body" id="DropDoc">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 col-xs-12" style="margin-top: 10px">
+                <div class="cardbox">
                     <div class="body">
-                        <div class="user-btm-box">
+                        <div class="mypost-list">
+                            <div id="mapid" style="height: 600px"></div>
+                        </div>
+                        <hr>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- end page content -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+@section scripts {
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        console.clear();
+
+
+        var specialities = [];
+        var arr = @Html.Raw(Json.Encode(ViewBag.result));
+        arr.map(e => {
+            specialities.push(e.speciality);
+        });
+        console.log(specialities)
+        //patient picker and circle
+        var greenIcon = new L.Icon({
+            iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+        var pat = @Html.Raw(Json.Encode(ViewBag.patient));
+        var mymap = L.map('mapid').setView([pat.address.latitude, pat.address.longit], 10);
+        var circle = L.circle([pat.address.latitude, pat.address.longit],
+            {
+                color: 'green',
+                fillColor: '#008000',
+                fillOpacity: 0.5,
+                radius: 1000
+            }).addTo(mymap);
+
+        var marker = L.marker([pat.address.latitude, pat.address.longit], { icon: greenIcon });
+        marker.bindPopup('<b>Hello Sir!</b><br>m the patient <button onclick="alert(' +
+            "'aa'" +
+            ')"></button> <br>find me the closest doctors please!.').openPopup();
+        marker.addTo(mymap);
+
+
+        //doctors
+        // console.log(pat.firstName);
+
+
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
+            {
+                attribution:
+                    'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                maxZoom: 18,
+                id: 'mapbox.streets',
+                accessToken:
+                    'pk.eyJ1IjoiaXNtYWlsMTk5NCIsImEiOiJjam90MDlxNmEwdG94M2twYWdyemdxMWJ1In0.papmvJruFCzp06NqaLVQcg'
+            }).addTo(mymap);
+        var element;
+
+        function onMarkerClick(data) {
+
+            console.log(data.address);
+            var htmlcontent = "";
+            $('#DropDoc').html(` <div class="user-btm-box" id="doctorInfo">
+                <div class="row">
+                                            <div class="profile-userpic">
+                                                <img src="` +
+                data.UrlPhoto +
+                `" class="img-responsive" alt=""> </div>
+                                        </div>
                             <!-- .row -->
                             <div class="row text-center m-t-10">
+                            <input hidden id="docId" value="
+                           ` +data.id+`"/>
+                           <input hidden id="docspec" value="
+                           ` +data.speciality+`"/>
+
                                 <div class="col-lg-6 col-md-12 col-sm-6 col-xs-12 b-r">
                                     <strong>Name</strong>
-                                    <p>Pankaj Rai</p>
+
+
+                                    <p>` +
+                data.firstName +
+                ` ` +
+                data.lastName +
+                `</p>
                                 </div>
                                 <div class="col-lg-6 col-md-12 col-sm-6 col-xs-12">
-                                    <strong>Occupation</strong>
-                                    <p>Engineer</p>
+                                    <strong>Speciality</strong>
+                                    <p>` +
+                data.speciality +
+                `</p>
                                 </div>
                             </div>
                             <!-- /.row -->
@@ -56,12 +163,16 @@
                             <!-- .row -->
                             <div class="row text-center m-t-10">
                                 <div class="col-lg-6 col-md-12 col-sm-6 col-xs-12 b-r">
-                                    <strong>Email ID</strong>
-                                    <p>pankaj@gmail.com</p>
+                                    <strong>Email </strong>
+                                    <p>` +
+                data.email +
+                `</p>
                                 </div>
                                 <div class="col-lg-6 col-md-12 col-sm-6 col-xs-12">
                                     <strong>Phone</strong>
-                                    <p>+123 456 789</p>
+                                    <p>` +
+                data.phoneNumber +
+                `</p>
                                 </div>
                             </div>
                             <!-- /.row -->
@@ -71,47 +182,105 @@
                                 <div class="col-md-12">
                                     <strong>Address</strong>
                                     <p>
-                                        
-                                        345, Sarju Appt., Mota Varacha, Surat
-                                        <br> Gujarat, India.
+
+                                       ` +
+                data.address.fullAddress +
+                `
                                     </p>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8 col-xs-12">
-            <div class="cardbox">
-                <div class="body">
-                    <div class="mypost-list" >
-                        <div id="mapid" style="height: 500px"></div>
-                    </div>
-                    <hr>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-    <!-- end page content -->
-   
-<script>
-    var mymap = L.map('mapid').setView([51.505, -0.09], 13);
-    var marker = L.marker([51.5, -0.09]).addTo(mymap);
-    var circle = L.circle([51.508, -0.11], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500
-    }).addTo(mymap);
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
-        id: 'mapbox.streets',
-        accessToken: 'pk.eyJ1IjoiaXNtYWlsMTk5NCIsImEiOiJjam90MDlxNmEwdG94M2twYWdyemdxMWJ1In0.papmvJruFCzp06NqaLVQcg'
-    }).addTo(mymap);
-   
-</script>
+                        </div>`);
+        }
+
+        function searchdoctorsBySpeciality() {
+            var text = $('#tags').val();
+
+            var array = @Html.Raw(Json.Encode(ViewBag.result));
+            if (text == "") {
+                //   console.log("here")
+                array.map(e => {
+                    // element = JSON.stringify(e);
+
+                    var marker = L.marker([e.address.latitude, e.address.longit]);
+                    element = JSON.stringify(e);
+
+                    marker
+                        .bindPopup("<b>Hello Doc!</b><br><br>I am  <b>Dr." +
+                            e.lastName +
+                            " , i'm a " +
+                            e.speciality +
+                            "</b><center><br><button class='btn btn-circle btn-primary' onclick='onMarkerClick(" +
+                            element +
+                            ")'>" +
+                            "<i class='fa fa-address-book'></i></button></center> ")
+                        .openPopup();
+
+                    marker.addTo(mymap);
+                });
+            } else {
+
+                array.map(e => {
+                    if (e.speciality.includes(text)) {
+                        var marker = L.marker([e.address.latitude, e.address.longit]);
+                        element = JSON.stringify(e);
+
+                        marker
+                            .bindPopup("<b>Hello Doc!</b><br><br>I am  <b>Dr." +
+                                e.lastName +
+                                " , i'm a " +
+                                e.speciality +
+                                "</b><center><br><button class='btn btn-circle btn-primary' onclick='onMarkerClick(" +
+                                element +
+                                ")'>" +
+                                "<i class='fa fa-address-book'></i></button></center> ")
+                            .openPopup();
+
+                        marker.addTo(mymap);
+                    }
+                });
+            }
+
+
+        }
+
+
+        function autocompelte() {
+
+            $("#tags").autocomplete({
+                source: specialities
+            });
+        }
+
+        function addDoctorTopath() {
+            console.log($('#docId').val());
+            console.log($('#idPathPatient').val());
+            console.log($('#docspec').val());
+
+            swal({
+                title: "Adding doctors to patient path",
+                text: "are you sure to add this doctor?",
+                type: "info",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true
+            }, function () {
+                setTimeout(function () {
+                    $.ajax({
+                        type: "POST",
+                        url: "/MedicalPath/addDoctorToPath",
+
+                        data: { idDoc: $('#docId').val(), idpath: $('#idPathPatient').val(),desc: $('#docspec').val() },
+                        dataType: "json",
+                        success: function (data) {
+                            $('#DropDoc').empty();
+                            //swal("Succes!", "You wrote: " + data.message, "success");
+
+                            location.reload();
+
+                        }
+                    });
+                }, 2000);
+            });
+        }
+    </script>
+}

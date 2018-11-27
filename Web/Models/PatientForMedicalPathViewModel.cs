@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Data.Models;
 
 namespace Web.Models
 {
-    public class DoctorViewModel
+    public class PatientForMedicalPathViewModel
     {
-
         public int id { get; set; }
         public string UrlPhoto { get; set; }
 
@@ -25,13 +23,10 @@ namespace Web.Models
         public string speciality { get; set; }
 
         public string tariff { get; set; }
-
         public int address_id { get; set; }
+
         public AddressViewModel address { get; set; }
         public string state { get; set; }
 
-
-
     }
-
 }

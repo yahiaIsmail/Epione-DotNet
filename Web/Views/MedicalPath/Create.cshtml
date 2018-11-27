@@ -38,7 +38,7 @@
                     </div>
                     <div class="card-body ">
                         <div class="row">
-                          
+
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <div class="btn-group pull-right">
                                     <ul class="dropdown-menu pull-right">
@@ -64,47 +64,49 @@
                         <div class="table-scrollable">
                             <table class="table table-hover table-checkable order-column full-width" id="example4">
                                 <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Patient</th>
-                                    <th>Email </th>
-                                    <th> Status </th>
-                                    <th> Appointment date </th>
-                                      
-                                        
-                                    <th> Create Path </th>
-                                </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th>Patient</th>
+                                        <th>Email </th>
+                                        <th> Status </th>
+                                        <th> Appointment date </th>
+
+
+                                        <th> Create Path </th>
+                                    </tr>
                                 </thead>
                                 <tbody id="list">
-                                @foreach( var i in ViewBag.result){
-                                    <tr class="odd gradeX" id="@i.id">
-                                        <td class="patient-img">
-                                            <img src="@i.users.UrlPhoto" alt="patient image">
-                                        </td>
-                                        <td>@i.users.firstName  @i.users.lastName</td>
-                                        <td class="center">
-                                            <a href="mailto:@i.users.email">
-                                                @i.users.email </a>
-                                        </td>
-                                        <td class="center"><button type="button" class="btn btn-circle btn-warning">@i.status</button></td>
-                                        @{DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc)
-                                              .AddMilliseconds(@i.dateRDV).ToLocalTime();
+                                    @foreach (var i in ViewBag.result)
+                                    {
+                                        <tr class="odd gradeX" id="@i.id">
+                                            <td class="patient-img">
+                                                <img src="@i.users.UrlPhoto" alt="patient image">
+                                            </td>
+                                            <td>@i.users.firstName  @i.users.lastName</td>
+                                            <td class="center">
+                                                <a href="mailto:@i.users.email">
+                                                    @i.users.email
+                                                </a>
+                                            </td>
+                                            <td class="center"><button type="button" class="btn btn-circle btn-warning">@i.status</button></td>
+                                            @{DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc)
+                      .AddMilliseconds(@i.dateRDV).ToLocalTime();
 
-                                        } 
-            
-                                        <td class="center">
-                                            @dtDateTime
-                                        </td>
+                                            }
 
-                                        <td>
-                                            <a class="btn btn-primary btn-xs" onclick="alertsweet(@i.id)">
-                                                <i class="fa fa-plus"></i>
-                                            </a>
+                                            <td class="center">
+                                                @dtDateTime
+                                            </td>
 
-                                        </td>
-                                    </tr>
-                                }
-                              
+                                            <td>
+                                                <a class="btn btn-primary btn-xs" onclick="alertsweet(@i.id)">
+                                                    <i class="fa fa-plus"></i>
+                                                </a>
+
+                                            </td>
+                                        </tr>
+                                                }
+
 
                                 </tbody>
                             </table>
@@ -115,11 +117,12 @@
         </div>
     </div>
 </div>
-<script>
+@section scripts{
+    <script>
     var justif = "";
     function alertsweet(id) {
         obj = new Object();
-       
+
         swal({
             title: "Path creation",
             text: "Justification",
@@ -164,10 +167,11 @@
                             });
                     }
                 });
-               
-                
+
+
             }, 2000);
-           
+
         });
     }
-</script>
+    </script>
+}

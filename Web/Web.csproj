@@ -201,12 +201,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AddressViewModel.cs" />
     <Compile Include="Models\DemandViewModel.cs" />
     <Compile Include="Models\DoctorPathViewModel.cs" />
     <Compile Include="Models\DoctorViewModel.cs" />
     <Compile Include="Models\MedicalPathViewModel.cs" />
     <Compile Include="Models\MotifViewModel.cs" />
     <Compile Include="Models\MedicalVisitViewModel.cs" />
+    <Compile Include="Models\PatientForMedicalPathViewModel.cs" />
     <Compile Include="Models\PatientViewModel.cs" />
     <Compile Include="Models\rankdoc.cs" />
     <Compile Include="Models\RdvForMedicalViewModel.cs" />
@@ -747,6 +749,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Views\MedicalPath\leaf-red.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
