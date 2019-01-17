@@ -51,7 +51,8 @@ namespace Web.Controllers
                 str = response.Content.ReadAsStringAsync().Result;
                 json= JObject.Parse(str);
                 var result = JsonConvert.DeserializeObject<user>(str);
-                
+
+                Session["id"] = result.id;
                 Session["firstName"] = result.firstName;
                 Session["lastName"] = result.lastName;
                 Session["username"] = result.username;

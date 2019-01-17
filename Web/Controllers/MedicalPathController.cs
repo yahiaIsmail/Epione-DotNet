@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Mail;
 using System.Threading;
 using System.Web;
 using System.Web.Hosting;
@@ -13,6 +14,8 @@ using Data.Models;
 
 using Newtonsoft.Json.Linq;
 using Service;
+using Web.Excel;
+
 using Web.Models;
 using WebGrease.Css.Extensions;
 
@@ -35,7 +38,7 @@ namespace Web.Controllers
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:18080");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage response = client.GetAsync("/JAVAEE-web/rest/medicalPath/AllPathsForoneDoc/1").Result;
+            HttpResponseMessage response = client.GetAsync("/JAVAEE-web/rest/medicalPath/AllPathsForoneDoc/"+Session["id"]).Result;
             var b = response.Content.ReadAsAsync<IEnumerable<MedicalPathViewModel>>().Result;
             foreach (var i in b)
             {
@@ -59,7 +62,7 @@ namespace Web.Controllers
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:18080");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage response = client.GetAsync("/JAVAEE-web/rest/medicalPath/RdvsDoc/2").Result;
+            HttpResponseMessage response = client.GetAsync("/JAVAEE-web/rest/medicalPath/RdvsDoc/"+ Session["id"]).Result;
             ViewBag.result = response.Content.ReadAsAsync<IEnumerable<RdvForMedicalViewModel>>().Result;
             return View();
         }
@@ -89,7 +92,7 @@ namespace Web.Controllers
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage response = client.GetAsync("/JAVAEE-web/rest/medicalPath/getPathById/" + id).Result;
             ViewBag.result = response.Content.ReadAsAsync<IEnumerable<MedicalPathViewModel>>().Result;
-
+            ViewBag.id = id;
             return View();
         }
 
@@ -166,7 +169,7 @@ namespace Web.Controllers
         }
 
         // GET: MedicalPath/Details/5
-        public ActionResult addDoctorToPath(int idDoc, int idpath, string desc)
+        public ActionResult addDoctorToPath(int idDoc, int idpath, string desc,string email)
         {
             IDatabaseFactory dbf = new DatabaseFactory();
             //add new pathdoc
@@ -188,49 +191,88 @@ namespace Web.Controllers
                 "INSERT INTO `medicalvisit` (`id`, `createdAt`, `description`, `medicalState`, `rating`, `pathDoctors_id`) " +
                 "VALUES (NULL, '" + sqlFormattedDate + "', '" + desc + "', b'0', '0', '" + generatedId.ElementAt(0) + "');";
             dbf.DataContext.Database.ExecuteSqlCommand(qr);
-
-
+            
+            try
+            {
+                MailMessage message = new MailMessage("amuari01@gmail.com",email, "A new Doctor has been added to your path!", "Dear Patient,You have take rdv with doctors assigned to you path !");
+                message.IsBodyHtml = true;
+                SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
+                client.EnableSsl = true;
+                client.Credentials = new System.Net.NetworkCredential("amuari01@gmail.com", "mr8w8901g");
+                client.Send(message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+            }
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
 
         }
 
-
-        // POST: MedicalPath/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult editMedicalPath(int id,string justif)
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            IDatabaseFactory dbf = new DatabaseFactory();
+            string query = "UPDATE `medicalpath` SET `justification` = "+justif+" WHERE `medicalpath`.`id` ="+id;
+            int gentId = dbf.DataContext.Database.ExecuteSqlCommand(query);
+            return Json(new { success = true, message =gentId }, JsonRequestBehavior.AllowGet);
         }
-
-        // GET: MedicalPath/Delete/5
-        public ActionResult Delete(int id)
+       
+        public ActionResult removeDoc(int id)
         {
+            IDatabaseFactory dbf = new DatabaseFactory();
+            string query = "DELETE FROM medicalvisit WHERE pathDoctors_id=" + id;
+            int gentId = dbf.DataContext.Database.ExecuteSqlCommand(query);
+            string qr = "DELETE FROM pathdoctors WHERE id=" + id;
+            int gen = dbf.DataContext.Database.ExecuteSqlCommand(qr);
+            return Json(new { success = true, message = "success" }, JsonRequestBehavior.AllowGet);
+        }
+        // GET: MedicalPath/getVisitsOf Doctor/5
+        public ActionResult GetVisits()
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:18080");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage response = client.GetAsync("/JAVAEE-web/rest/medicalPath/getDoctorVisits/"+Session["id"]).Result;
+            ViewBag.result = response.Content.ReadAsAsync<IEnumerable<MedicalVisitViewModel>>().Result;
             return View();
         }
 
-        // POST: MedicalPath/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult updateVisit(int id,int state)
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            IDatabaseFactory dbf = new DatabaseFactory();
+            string query = "UPDATE `medicalvisit` SET `medicalState` = " + state + " WHERE `medicalvisit`.`id` =" + id;
+            int gentId = dbf.DataContext.Database.ExecuteSqlCommand(query);
+            return Json(new { success = true, message = "success" }, JsonRequestBehavior.AllowGet);
         }
+
+        public void Excel(int id)
+        {
+            IDatabaseFactory dbf=new DatabaseFactory();
+            
+            string query = "SELECT id,UrlPhoto,email,firstName,lastName,paimentMethode,speciality,address_id,tariff,username  "
+                           + "FROM user u "
+                           + "WHERE u.role=2 AND u.id IN (SELECT doctor_id from pathdoctors p WHERE p.path_id=" + id + ")";
+
+
+
+
+            IEnumerable<DoctorViewModel> data = dbf.DataContext.Database.SqlQuery<DoctorViewModel>(query).ToList();
+            List<DoctorViewModel> docs=new List<DoctorViewModel>();
+            foreach (var VARIABLE in data)
+            {
+                docs.Add(VARIABLE);
+            }
+            DoctorsExcel excel = new DoctorsExcel();
+            Response.ClearContent();
+            Response.BinaryWrite(excel.GenerateExcel(docs));
+            Response.AddHeader("content-disposition", "attachment; filename=DoctorsInPath"+id+".xlsx");
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.Flush();
+            Response.End();
+           // return Json(new { success = true, message = "success" }, JsonRequestBehavior.AllowGet);
+
+        }
+
+
     }
 }

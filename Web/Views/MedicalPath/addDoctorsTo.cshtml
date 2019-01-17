@@ -80,20 +80,12 @@
                                                             <i class="fa fa-angle-down"></i>
                                                         </a>
                                                         <ul class="dropdown-menu pull-right">
+                                                           
                                                             <li>
-                                                                <a href="javascript:;">
-                                                                    <i class="fa fa-print"></i> Print
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="javascript:;">
-                                                                    <i class="fa fa-file-pdf-o"></i> Save as PDF
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="javascript:;">
-                                                                    <i class="fa fa-file-excel-o"></i> Export to Excel
-                                                                </a>
+                                                                
+                                                                @Html.ActionLink("Excel", "Excel", new { id = ViewBag.id })
+                                                                <i class="fa fa-file-excel-o"></i>
+
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -126,7 +118,7 @@
                                                                 {
 
 
-                                                                    <tr class="odd gradeX" data-pathdoctor="@Json.Encode(j.medicalVisit)" data-users="@Json.Encode(i.rendezVous.users)" data-date="@Json.Encode(i.rendezVous.dateRDV)" onclick="showVisit(this)">
+                                                                    <tr id="@j.id" class="odd gradeX">
                                                                         <td class="patient-img">
                                                                             <img src="@j.doctor.UrlPhoto" alt="doctor img">
                                                                         </td>
@@ -146,10 +138,10 @@
                                                                         </td>
                                                                         <td class="left"><span>@j.doctor.tariff</span></td>
                                                                         <td>
-                                                                            <a href="edit_doctor.html" class="btn btn-primary btn-xs">
-                                                                                <i class="fa fa-pencil"></i>
+                                                                            <a  data-pathdoctor="@Json.Encode(j.medicalVisit)" data-users="@Json.Encode(i.rendezVous.users)" data-date="@Json.Encode(i.rendezVous.dateRDV)" onclick="showVisit(this)" class="btn btn-primary btn-xs">
+                                                                                <i class="fa fa-book"></i>
                                                                             </a>
-                                                                            <button class="btn btn-danger btn-xs">
+                                                                            <button class="btn btn-danger btn-xs" onclick="RemoveDoctor(@j.id)">
                                                                                 <i class="fa fa-trash-o "></i>
                                                                             </button>
                                                                         </td>
@@ -260,6 +252,39 @@
 @section scripts{
     <script>
 
+        function  RemoveDoctor(id) {
+            swal({
+                    title: "Are you sure?",
+                    text: "You will Remove this doctor from this path!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Yes, Remove him!",
+                    cancelButtonText: "No, cancel ",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                },
+                function(isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/MedicalPath/removeDoc",
+
+                            data: { id: id },
+                            dataType: "json",
+                            success: function(data) {
+                                $('#'+ id).remove();
+                                
+                                swal("Removed!", "The Doctor was removed from this path.", "success");
+                            }
+                        });
+                       
+                    } else {
+                        swal("Cancelled", "Your Doctor is safe :)", "error");
+                    }
+                });
+            
+        }
         function showVisit(elem) {
             var visit = $(elem).data('pathdoctor'), htmlContent = "", html2 = "";
             var patient = $(elem).data('users')

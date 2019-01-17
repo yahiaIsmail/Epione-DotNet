@@ -28,7 +28,17 @@
     <!-- YOUR CUSTOM CSS -->
     <link href=@Url.Content("~/Content/css/custom.css") rel="stylesheet">
   
-
+    <!-- Start of BotEngine (www.botengine.ai) code -->
+    <script type="text/javascript">
+    window.__be = window.__be || {};
+    window.__be.id = "5bfb2d1e3fd03310106f9cb4";
+    (function() {
+        var be = document.createElement('script'); be.type = 'text/javascript'; be.async = true;
+        be.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.botengine.ai/widget/plugin.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(be, s);
+    })();
+    </script>
+    <!-- End of BotEngine code -->
 </head>
 <body>
 
@@ -204,6 +214,8 @@
     <script src=@Url.Content("~/Content/js/common_scripts.min.js")></script>
     <script src=@Url.Content("~/Content/js/functions.js")></script>
 
-
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 </body>
 </html>

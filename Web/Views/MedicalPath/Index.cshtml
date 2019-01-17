@@ -100,7 +100,7 @@
                                         @foreach (var j in ViewBag.result)
                                         {
                                             <td class="center">@j.id</td>
-                                            <td class="center">@j.justification</td>
+                                            <td class="center" id="@j.id">@j.justification</td>
                                             if (@j.active == false)
                                             {
                                                 <td class="center">Disabled</td>
@@ -149,7 +149,7 @@
                                             if (@j.active == true)
                                             {
                                                 <td>
-                                                    <a class="btn btn-primary btn-xs" onclick="a()">
+                                                    <a class="btn btn-primary btn-xs" onclick="a(@j.id)">
                                                         <i class="fa fa-pencil"></i>
                                                     </a>
                                                     <a href="/MedicalPath/addDoctorsTo/@j.id" title="Add doctors to the patient path" class="btn btn-success btn-xs">
@@ -225,126 +225,149 @@
                 <div class="card card-topline-aqua">
                     <div class="card-body no-padding height-9">
 
-                        <div class="profile-usertitle">
-                            <div class="profile-usertitle-name"> Jayna Patil </div>
-                            <div class="profile-usertitle-job"> Nurse </div>
-                        </div>
+                    
                         <ul class="list-group list-group-unbordered" id="visitcontent"></ul>
                         <!-- END SIDEBAR USER TITLE -->
                         <!-- SIDEBAR BUTTONS -->
-                        <div class="profile-userbuttons">
-                            <button type="button" class="btn btn-circle deepPink-bgcolor btn-sm">Follow</button>
-                            <button type="button" class="btn btn-circle red btn-sm">Message</button>
-                        </div>
+                      
                         <!-- END SIDEBAR BUTTONS -->
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+          
         </div>
     </div>
 </div>
 @section scripts{
     <script>
-        function a() {
-            swal(
-                'Good job!',
-                'You clicked the button!',
-                'success'
-            );
-        }
+    function a(id) {
+        console.log($('#' + id).text());
+        //editMedicalPath
+        swal({
+            title: "Path update",
+            text: "Justification",
+            type: "input",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true,
+            inputPlaceholder: "Write justification"
+        }, function(inputValue) {
+            if (inputValue === false) return false;
+            if (inputValue === "") {
+                swal.showInputError("You need to write justification for the path!");
+                return false
+            }
+            setTimeout(function() {
+                $.ajax({
+                    type: "POST",
+                    url: "/MedicalPath/editMedicalPath",
 
-        function showDocs(elem) {
-            var id = $(elem).data('pathdoctor'), htmlContent = "";
+                    data: { id: id , justif : JSON.stringify(inputValue) },
+                    dataType: "json",
+                    success: function(data) {
+                        $('#' + id).text(inputValue);
+                        swal("Good job!", "Justifcation has been updated!", "success")
 
-            console.log(id);
+                    }
+                });
 
-            id.map(e => {
-                htmlContent += `<li>
+
+            },2000);
+
+        });
+                }
+
+                function showDocs(elem) {
+                    var id = $(elem).data('pathdoctor'), htmlContent = "";
+
+                    console.log(id);
+
+                    id.map(e => {
+                        htmlContent += `<li>
             <div class="prog-avatar">
             <img src= "` +
-                    e.doctor.UrlPhoto +
-                    `" alt="">
+                            e.doctor.UrlPhoto +
+                            `" alt="">
             </div>
             <div class="details">
             <div class="doctitle">
             <a href="#">` +
-                    e.doctor.firstName +
-                    " " +
-                    e.doctor.firstName +
-                    `</a> (` +
-                    e.doctor.speciality +
-                    `)&nbsp &nbsp &nbsp
+                            e.doctor.firstName +
+                            " " +
+                            e.doctor.firstName +
+                            `</a> (` +
+                            e.doctor.speciality +
+                            `)&nbsp &nbsp &nbsp
                 <a class ="btn btn-primary btn-xs" title="medical visit" id= "` +
-                    e.medicalVisit.id +
-                    `" value= "` +
-                    e.medicalVisit.description +
-                    `"
+                            e.medicalVisit.id +
+                            `" value= "` +
+                            e.medicalVisit.description +
+                            `"
                 onclick= "showVisit(` +
-                    e.medicalVisit.createdAt +
-                    `,` +
-                    e.medicalVisit.medicalState +
-                    `,'` +
-                    e.medicalVisit.des +
-                    `')" >
+                            e.medicalVisit.createdAt +
+                            `,` +
+                            e.medicalVisit.medicalState +
+                            `,'` +
+                            e.medicalVisit.des +
+                            `')" >
                 <i class ="fa fa-bookmark"></i>
                 </a>
             </div>
               <div>
 
             <span class ="doctitle">Order In Path: ` +
-                    " " +
-                    e.ordre +
-                    `</span>
+                            " " +
+                            e.ordre +
+                            `</span>
             </div>
             <div>
 
             <span class ="clsAvailable">` +
-                    e.doctor.email +
-                    `
+                            e.doctor.email +
+                            `
                 </span>
             </div>
 
             </div>
             </li>`
-            });
-            $("#contentOfDoc").html(htmlContent);
+                    });
+                    $("#contentOfDoc").html(htmlContent);
 
 
-            $('#DocInPath').modal();
-        }
+                    $('#DocInPath').modal();
+                }
 
-        function showVisit(elem1, elem2, id) {
-            console.log(elem1);
-            var i = id;
-            console.log(id);
+                function showVisit(elem1, elem2, id) {
+                    console.log(elem1);
 
-            //r description = " ";
-            console.log("" + elem2 + "");
+                    var d = new Date(parseInt(elem1, 10));
+                    var ds = d.toDateString();
+                    var i = id;
+                    console.log(id);
 
-            var htmlContent = `<li class="list-group-item">
+                    //r description = " ";
+                    console.log("" + elem2 + "");
+
+                    var htmlContent = `<li class="list-group-item">
            <b> Description </b> <a class="pull-right">` +
-                id +
-                `</a>
+                        id +
+                        `</a>
            </li>
            <li class="list-group-item">
            <b>Medical State</b> <a class="pull-right">` +
-                elem2 +
-                `</a>
+                        elem2 +
+                        `</a>
            </li>
            <li class="list-group-item">
            <b>Date of Creation</b> <a class="pull-right">` +
-                elem1 +
-                `</a>
+                        ds +
+                        `</a>
            </li>`
-            $('#visitcontent').html(htmlContent)
-            $('#visit').modal();
+                    $('#visitcontent').html(htmlContent)
+                    $('#visit').modal();
 
 
-        }
+                }
 
-    </script>
-}
+                </script>
+    }

@@ -1,0 +1,158 @@
+﻿@model IEnumerable<Web.Models.MedicalVisitViewModel>
+@{
+    ViewBag.Title = "GetVisits";
+    Layout = "~/Views/Shared/_BackOfficeLayout.cshtml";
+}
+
+
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <div class="page-bar">
+            <div class="page-title-breadcrumb">
+                <div class=" pull-left">
+                    <div class="page-title">Visits List</div>
+                </div>
+                <ol class="breadcrumb page-breadcrumb pull-right">
+                    <li>
+                        <i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="index.html">Home</a>&nbsp;<i class="fa fa-angle-right"></i>
+                    </li>
+                    <li>
+                        <a class="parent-item" href="#">Medical Visits</a>&nbsp;<i class="fa fa-angle-right"></i>
+                    </li>
+                    <li class="active">Visits List</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tabbable-line">
+                    <!-- <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#tab1" data-toggle="tab"> List View </a>
+                        </li>
+                        <li>
+                            <a href="#tab2" data-toggle="tab"> Grid View </a>
+                        </li>
+                    </ul> -->
+                   
+                    <div class="tab-content">
+                        <div class="tab-pane active fontawesome-demo" id="tab1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card card-topline-red">
+                                        <div class="card-head">
+                                            <header></header>
+                                            <div class="tools">
+                                                <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+                                                <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+                                                <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body ">
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                                    
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="table-scrollable">
+                                                <table class="table table-hover table-checkable order-column full-width" id="example4">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th> Code </th>
+                                                            <th> Medical State </th>
+                                                            <th> Description </th>
+                                                            <th> Rating  </th>                                           
+                                                            <th> Action </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @if (ViewBag.result != null) { 
+                                                    foreach (var i in ViewBag.result)
+                                                    {
+                                                        <tr class="odd gradeX">
+                                                            <td class="patient-img">
+                                                                <img src="~/Content/ADMIN/img/logoDeep.png" alt="">
+                                                            </td>
+                                                            <td>@i.id</td>
+                                                            <td class="left" id="@i.id">@i.medicalState</td>
+                                                            <td class="left">@i.description</td>
+                                                            <td class="left">@i.rating /10</td>
+
+                                                            <td>
+                                                                <a onclick="updateState(@i.id)" class="btn btn-primary btn-xs">
+                                                                    <i class="fa fa-pencil"></i>
+                                                                </a>
+                                                                <button class="btn btn-danger btn-xs">
+                                                                    <i class="fa fa-trash-o "></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                    }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7"></script>
+    <script>
+  
+        function updateState(id) {
+            swal({
+                title: 'Select Medical State',
+                input: 'select',
+                inputOptions: {
+                    '0': 'False',
+                    '1': 'True'
+                   
+                },
+                inputPlaceholder: 'required',
+                showCancelButton: true,
+                inputValidator: function (value) {
+                    return new Promise(function (resolve, reject) {
+                        if (value !== '') {
+                            resolve();
+                            
+                           
+                        } else {
+                            reject('You need to select a Tier');
+                        }
+                    });
+                }
+            }).then(function (result) {
+                if (result.value) {
+                    console.log(result.value);
+                    $.ajax({
+                        type: "POST",
+                        url: "/MedicalPath/updateVisit",
+
+                        data: { id: id ,state : result.value},
+                        dataType: "json",
+                        success: function (data) {
+                            if (result.value == 1) {
+                                $('#' + id).text("True");
+                            } else {
+                                $('#' + id).text("False");
+                            }
+                            swal("Updated!", "Updating medical state.", "success");
+                        }
+                    });
+                }
+            });
+        }
+
+    </script>
+}
