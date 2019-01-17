@@ -67,7 +67,7 @@ namespace Web.Controllers
             HttpClient clientMotif = new HttpClient();
             clientMotif.BaseAddress = new Uri("http://localhost:18080/");
             clientMotif.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage responseMotif = clientMotif.GetAsync("JAVAEE-web/rest/rdv/motifDoctor/" + id).Result;
+            HttpResponseMessage responseMotif = clientMotif.GetAsync("JAVAEE-web/rest/motif/motifDoctor/" + id).Result;
 
             if (responseMotif.IsSuccessStatusCode)
             {
@@ -123,12 +123,12 @@ namespace Web.Controllers
                 if (responseAdd.IsSuccessStatusCode)
                 {
                     success = 1;
-                   return RedirectToAction("Doctor", new { id = 1 });
+                   return RedirectToAction("Doctor", new { id = 2 });
                 }
                 else
                 {
                     success = 2;
-                   return RedirectToAction("Doctor", new { id = 1 });
+                   return RedirectToAction("Doctor", new { id = 2 });
                 }
             }
             catch
