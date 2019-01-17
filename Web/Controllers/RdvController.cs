@@ -18,6 +18,7 @@ namespace Web.Controllers
 {
     public class RdvController : Controller
     {
+        int success = 0;
         public ActionResult notFound()
         {
             return View("~/Views/notFound.cshtml");
@@ -56,6 +57,13 @@ namespace Web.Controllers
             //xmlDoc = XDocument.Parse(DataString);
 
             // end data mta3 docteur
+
+            if (success == 1)
+                ViewBag.result = "Your RDV is registered, please confirm it from your email";
+            else if (success == 2)
+                ViewBag.result = "Error, your RDV could not be accepted, please try again";
+            else
+                ViewBag.result = null;
             HttpClient clientMotif = new HttpClient();
             clientMotif.BaseAddress = new Uri("http://localhost:18080/");
             clientMotif.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -100,7 +108,7 @@ namespace Web.Controllers
 
                 RdvViewModel rdv = new RdvViewModel();
                 rdv.emailDoctor = "kais.bettaieb@esprit.tn";
-                rdv.emailPatient = collection["emailPatient"];
+                rdv.emailPatient = "raiizowqw@gmail.com";
                 rdv.motifId = Convert.ToInt32(collection["motifId"]);
                 DateTime dt = Convert.ToDateTime(collection["booking_time"]);
                 string s = collection["booking_date"];
@@ -114,17 +122,20 @@ namespace Web.Controllers
                     ("JAVAEE-web/rest/rdv/takeRdv/"+rdv.emailPatient + "/"+rdv.emailDoctor+"/"+rdv.motifId+"/"+rdv.dateRdv.Year+"/"+rdv.dateRdv.Month+"/"+rdv.dateRdv.Day+"/"+rdv.dateRdv.Hour+"/"+rdv.dateRdv.Minute,null).Result;
                 if (responseAdd.IsSuccessStatusCode)
                 {
-                    return Content("added");
+                    success = 1;
+                   return RedirectToAction("Doctor", new { id = 1 });
                 }
                 else
                 {
-
-                    return Content("error") ;
+                    success = 2;
+                   return RedirectToAction("Doctor", new { id = 1 });
                 }
             }
             catch
             {
-                return Content("error");
+                success = 2;
+               // ViewBag.result = "Error, your RDV could not be accepted, please try again";
+                return RedirectToAction("Doctor", new { id = 1 });
             }
         }
 

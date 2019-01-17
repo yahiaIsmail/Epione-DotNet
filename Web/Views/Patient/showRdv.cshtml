@@ -1,0 +1,277 @@
+﻿
+@{
+    ViewBag.Title = "showRdv";
+    Layout = "~/Views/Shared/_BackOfficeLayout.cshtml";
+}
+
+<!-- start page content -->
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <div class="page-bar">
+            <div class="page-title-breadcrumb">
+                <div class=" pull-left">
+                    <div class="page-title">Appointment List</div>
+                </div>
+                <ol class="breadcrumb page-breadcrumb pull-right">
+                    <li>
+                        <i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="index.html">Home</a>&nbsp;<i class="fa fa-angle-right"></i>
+                    </li>
+                    <li>
+                        <a class="parent-item" href="#">Appointment</a>&nbsp;<i class="fa fa-angle-right"></i>
+                    </li>
+                    <li class="active">Appointment List</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-topline-red">
+                    <div class="card-head">
+                        <header></header>
+                        <div class="tools">
+                            <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+                            <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+                            <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+                        </div>
+                    </div>
+                    <div class="card-body ">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <div class="btn-group pull-right">
+                                    <a class="btn deepPink-bgcolor  btn-outline dropdown-toggle" data-toggle="dropdown">
+                                        Tools
+                                        <i class="fa fa-angle-down"></i>
+                                    </a>
+                                    <ul class=" dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:;">
+                                                <i class="fa fa-print"></i> Print
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;">
+                                                <i class="fa fa-file-pdf-o"></i> Save as PDF
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;">
+                                                <i class="fa fa-file-excel-o"></i> Export to Excel
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-scrollable">
+                            <table class="table table-hover table-checkable order-column full-width" id="example4">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th> Doctor </th>
+                                        <th> Doctor Email </th>
+                                        <th> Date Of Appointment </th>
+                                        <th> Motif </th>
+                                        <th> Doctor's confirmations </th>
+                                        <th> Status</th>
+                                        <th> Your confirmation </th>
+
+                                        <th> Action </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var p in ViewBag.rdvs)
+                                    {
+                                        <tr class="odd gradeX">
+                                            <td class="patient-img">
+                                                <img src="@p.Doctors.UrlPhoto" alt="">
+                                            </td>
+                                            <td>@p.Doctors.firstName  @p.Doctors.lastName</td>
+                                            <td>
+                                                <a href="mailto:@p.Doctors.email">
+                                                    @p.Doctors.email
+                                                </a>
+                                            </td>
+
+
+                                            <td class="center">@p.drv</td>
+                                            <td>@p.Motif.description</td>
+                                            @if (@p.ConfirmationDoc == false)
+                                            {
+                                                <td> <span class="label label-sm label-danger">Not Confirmed</span></td>
+                                            }
+                                            else
+                                            {
+                                                <td> <span class="label label-sm label-primary">Confirmed</span></td>}
+                                            @if (@p.ConfirmationPatient == false)
+                                            {
+                                                <td> <a href="@Url.Action("confirmRdvPatient", "Patient", new { idPatient = p.Users.id, idRdv = p.id })" class="label label-sm label-danger">Confirm Now ?</a></td>
+                                            }
+                                            else
+                                            {
+                                                <td> <span class="label label-sm label-primary">Confirmed</span></td>}
+
+                                            @if (@p.Status == "Canceled")
+                                            {
+                                                <td> <span class="label label-sm label-danger">Canceled</span></td>
+                                            }
+                                            else
+                                            {
+                                                <td> <span class="label label-sm label-primary">@p.Status</span></td>}
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button class="btn btn-xs btn-primary dropdown-toggle no-margin" type="button" data-toggle="dropdown" aria-expanded="false">
+                                                        Actions
+                                                        <i class="fa fa-angle-down"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li>
+                                                            <a href="!#" data-toggle="modal" data-target="#motifUpdate"><i class="fa fa-trash-o"></i> Update Motif </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="!#" data-toggle="modal" data-target="#motifDate"><i class="fa fa-ban"></i> Update date </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <a href="@Url.Action("cancelRdv", "Patient", new { idPatient = p.Users.id, idRdv = p.id })" class="btn btn-danger btn-xs mt-2">
+                                                    <i class="fa fa-trash-o "> Cancel RDV</i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="row">
+            <div class="col-md-12">
+                <div class="card card-topline-lightblue">
+                    <div class="card-head">
+                        <header>DOUGHNUT CHART</header>
+                        <div class="tools">
+                            <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+                            <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+                            <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+                        </div>
+                    </div>
+                    <div class="card-body " id="chartjs_doughnut_parent">
+                        <div class="row">
+                            <canvas id="chartjs_doughnut" height="120"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+    </div>
+
+
+</div>
+<!-- end page content -->
+<div class="modal fade" id="motifDate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Change Rdv Date </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="date" required id="datemotif" name="datemotif" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- end page content -->
+<div class="modal fade" id="motifUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Change Motif</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <select name="changeMotif" id="changeMotif">
+                    <option value="1">Motif 1</option>
+                    <option value="2">Motif 2 </option>
+                    <option value="3">Motif 3</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<script>
+    $(document).ready(function () {
+        var randomScalingFactor = function () {
+            return Math.round(Math.random() * 100);
+        };
+
+        var config = {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [
+                        2,
+                       5,
+                        3,
+                        2,
+                       3,
+                    ],
+                    backgroundColor: [
+                        window.chartColors.red,
+                        window.chartColors.orange,
+                        window.chartColors.yellow,
+                        window.chartColors.green,
+                        window.chartColors.blue,
+                    ],
+                    label: 'Dataset 1'
+                }],
+                labels: [
+                    "Red",
+                    "Orange",
+                    "Yellow",
+                    "Green",
+                    "Blue"
+                ]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Doughnut Chart'
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
+            }
+        };
+
+        var ctx = document.getElementById("chartjs_doughnut").getContext("2d");
+        window.myDoughnut = new Chart(ctx, config);
+
+    });
+</script>*@

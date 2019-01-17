@@ -376,31 +376,13 @@
         <span class="title">Appointment</span><span class="arrow"></span>
     </a>
     <ul class="sub-menu">
+    
         <li class="nav-item  ">
-            <a href="schedule.html" class="nav-link ">
-                <span class="title">Doctor Schedule</span>
+            <a href="@Url.Action("showRdv", "Patient", new { id = 15 })" class="nav-link ">
+                <span class="title">Show Appointments</span>
             </a>
         </li>
-        <li class="nav-item  ">
-            <a href="book_appointment.html" class="nav-link ">
-                <span class="title">Book Appointment</span>
-            </a>
-        </li>
-        <li class="nav-item  ">
-            <a href="book_appointment_material.html" class="nav-link ">
-                <span class="title">Book Appointment Material</span>
-            </a>
-        </li>
-        <li class="nav-item  ">
-            <a href="edit_appointment.html" class="nav-link ">
-                <span class="title">Edit Appointment</span>
-            </a>
-        </li>
-        <li class="nav-item  ">
-            <a href="view_appointment.html" class="nav-link ">
-                <span class="title">View All Appointment</span>
-            </a>
-        </li>
+        
     </ul>
 </li>
 <li class="nav-item  ">
@@ -1364,7 +1346,6 @@
 <script src=@Url.Content("~/Content/ADMIN/assets/chart-js/home-data.js")></script>
 <script src=@Url.Content("~/Content/ADMIN/assets/sweet-alert/sweetalert.min.js")></script>
 <script src=@Url.Content("~/Content/ADMIN/assets/sweet-alert/sweet-alert-data.js")></script>
-@RenderSection("scripts")
 <!-- end js include path -->
 </body>
 

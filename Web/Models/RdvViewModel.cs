@@ -1,4 +1,5 @@
 ﻿using Data.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -35,6 +36,21 @@ namespace Web.Models
         public int id { get; set; }
         public string description { get; set; }
         public user doctor { get; set; }
+
+    }
+
+    public class RdvGetModel
+    {
+        public int id { get; set; }
+        public user Users { get; set; }
+        public user Doctors { get; set; }
+        public motif Motif { get; set; }
+        public long DateRdv { get; set; }
+        public Boolean ConfirmationDoc { get; set; }
+        public Boolean ConfirmationPatient { get; set; }
+        public medicalpath MedicalPath { get; set; }
+        public DateTime drv { get; set; }   
+        public string Status { get; set; }
 
     }
 }

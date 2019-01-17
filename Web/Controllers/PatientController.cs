@@ -12,6 +12,7 @@ using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Converters;
 
 namespace Web.Controllers
 {
@@ -116,6 +117,67 @@ namespace Web.Controllers
             catch
             {
                 return View(patient);
+            }
+        }
+
+        public ActionResult showRdv(int id)
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://127.0.0.1:18080/");
+            HttpResponseMessage response;
+            response = client.GetAsync("JAVAEE-web/rest/rdv/patient?patientId=" + id).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                 IEnumerable <RdvGetModel> rdvs = response.Content.ReadAsAsync<IEnumerable<RdvGetModel>>().Result;
+                foreach(RdvGetModel rd in rdvs)
+                {
+                    rd.drv = new DateTime();
+                    //DateTimeOffset dateTimeOffset = DateTimeOffset.(rd.DateRdv);
+
+                    var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                    rd.drv = epoch.AddMilliseconds(rd.DateRdv);
+                }
+
+                ViewBag.rdvs = rdvs;
+            }
+            else
+            {
+                ViewBag.rdvs = null;
+            }
+            return View();
+        }
+
+        public ActionResult confirmRdvPatient(int idPatient, int idRdv)
+        {
+            string token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJweXRob24iLCJpc3MiOiJLYWlzIiwiaWF0IjoxNTQyNjcwOTk1LCJleHAiOjIxNzM4MjI5OTV9.eTIdO8NKW1cvRcqDuuofvV5fddeFbwG4BJz7AkBXyxbPgGZBJU5VQvGCKQa0_q57fvyNa8KBIMG1JKhvo4XMEQ";
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://127.0.0.1:18080/");
+            HttpResponseMessage response;
+            response = client.GetAsync("JAVAEE-web/rest/rdv/user/confirmRDV?Token=" + token + "&rdvId="+idRdv).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("showRdv", new { id = idPatient });
+            }
+            else
+            {
+                return RedirectToAction("showRdv", new { id = idPatient });
+            }
+           
+        }
+
+        public ActionResult cancelRdv(int idPatient, int idRdv)
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://127.0.0.1:18080/");
+            HttpResponseMessage response;
+            response = client.GetAsync("JAVAEE-web/rest/rdv/cancel?rdvId=" + idRdv).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("showRdv", new { id = idPatient });
+            }
+            else
+            {
+                return RedirectToAction("showRdv", new { id = idPatient });
             }
         }
 

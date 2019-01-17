@@ -787,6 +787,7 @@
     <Content Include="Views\BackOfficeHome\Delete.cshtml" />
     <Content Include="Views\Shared\_LayoutDoctor.cshtml" />
     <Content Include="Views\DoctorHome\Index.cshtml" />
+    <Content Include="Views\Patient\showRdv.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
