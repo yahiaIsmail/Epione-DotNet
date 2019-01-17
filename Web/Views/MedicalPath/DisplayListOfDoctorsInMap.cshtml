@@ -38,13 +38,13 @@
                 <div class="white-box">
                     <div>
                         <input type="text" onkeypress="autocompelte()" id="tags" class="form-control" placeholder="Doctor speciality">
-                        <button style="margin-left: 60px;margin-top: 5px" class="btn btn-info m-r-20" onclick="searchdoctorsBySpeciality()">Search</button>
+                        <button style="margin-left: 60px;margin-top: 5px" id="seDoc"class="btn btn-info m-r-20" onclick="searchdoctorsBySpeciality()">Search</button>
                     </div>
 
                     <div class="cardbox">
                         <div class="header" style="display: flex;">
                             <h4 class="font-bold"> ABOUT DOCTOR </h4>
-                            <button type="button" onclick="addDoctorTopath()" id="submitdoc" class="btn btn-circle btn-success"><i class="fa fa-plus-circle"></i> Add </button>
+                            
                         </div>
                         <div class="body" id="DropDoc">
 
@@ -75,12 +75,18 @@
     <script>
         console.clear();
 
-
+       
         var specialities = [];
+        var choosedDistances = [];
+        var distances = [];
         var arr = @Html.Raw(Json.Encode(ViewBag.result));
         arr.map(e => {
-            specialities.push(e.speciality);
+            if(!specialities.includes(e.speciality))
+            { specialities.push(e.speciality);}
         });
+        if (specialities.length==0) {
+            $('#seDoc').attr("disabled", "disabled");
+        }
         console.log(specialities)
         //patient picker and circle
         var greenIcon = new L.Icon({
@@ -102,9 +108,7 @@
             }).addTo(mymap);
 
         var marker = L.marker([pat.address.latitude, pat.address.longit], { icon: greenIcon });
-        marker.bindPopup('<b>Hello Sir!</b><br>m the patient <button onclick="alert(' +
-            "'aa'" +
-            ')"></button> <br>find me the closest doctors please!.').openPopup();
+        marker.bindPopup('<b>Hello Sir!</b><br>I am the patient<br>find me the closest doctors please!.').openPopup();
         marker.addTo(mymap);
 
 
@@ -132,14 +136,18 @@
                                             <div class="profile-userpic">
                                                 <img src="` +
                 data.UrlPhoto +
-                `" class="img-responsive" alt=""> </div>
+                `" class="img-responsive" alt=""><br> <button type="button" onclick="addDoctorTopath()" id="submitdoc" class="btn btn-circle btn-success"><i class="fa fa-plus-circle"></i> Add </button></div>
                                         </div>
                             <!-- .row -->
                             <div class="row text-center m-t-10">
                             <input hidden id="docId" value="
-                           ` +data.id+`"/>
+                           ` +
+                data.id +
+                `"/>
                            <input hidden id="docspec" value="
-                           ` +data.speciality+`"/>
+                           ` +
+                data.speciality +
+                `"/>
 
                                 <div class="col-lg-6 col-md-12 col-sm-6 col-xs-12 b-r">
                                     <strong>Name</strong>
@@ -197,10 +205,12 @@
 
             var array = @Html.Raw(Json.Encode(ViewBag.result));
             if (text == "") {
+             
+
                 //   console.log("here")
                 array.map(e => {
                     // element = JSON.stringify(e);
-
+                   
                     var marker = L.marker([e.address.latitude, e.address.longit]);
                     element = JSON.stringify(e);
 
@@ -218,9 +228,19 @@
                     marker.addTo(mymap);
                 });
             } else {
-
+               
                 array.map(e => {
                     if (e.speciality.includes(text)) {
+                        console.clear();
+                        var complex={};
+                        complex.address = e.address;
+                        complex.distanceCalculated = distance(pat.address.latitude,
+                            pat.address.longit,
+                            e.address.latitude,
+                            e.address.longit,
+                            "K");
+                        distances.push(complex);
+                        //var distan=distance(pat.address.latitude, pat.address.longit, e.address.latitude, e.address.longit, "K");
                         var marker = L.marker([e.address.latitude, e.address.longit]);
                         element = JSON.stringify(e);
 
@@ -238,6 +258,29 @@
                         marker.addTo(mymap);
                     }
                 });
+                //distances.map(i => {
+                //    var calcul=distance(pat.address.latitude, pat.address.longit, i.latitude, i.longit, "K");
+                //    choosedDistances.push(calcul);
+                //})
+                //choosedDistances.sort();
+                //console.log("aaaaa"+choosedDistances);
+                swal({
+                    title: "Find The closest!",
+                    text: "The closest doctor is here.",
+                    type: "success",
+                    timer: 3000
+                });
+               
+                
+                distances.sort(function(a, b){return a.distanceCalculated - b.distanceCalculated});
+                console.log(distances);
+                var polygon = L.polygon([
+                    [pat.address.latitude,pat.address.longit],
+                    [distances[0].address.latitude, distances[0].address.longit],
+                    [distances[1].address.latitude, distances[1].address.longit]
+                    
+                ]).addTo(mymap);
+                polygon.bindPopup("<b>Hello Doc</b>, <br>I tried to get for you the closest for this patient!<br>I'm here to help you :).");
             }
 
 
@@ -257,30 +300,53 @@
             console.log($('#docspec').val());
 
             swal({
-                title: "Adding doctors to patient path",
-                text: "are you sure to add this doctor?",
-                type: "info",
-                showCancelButton: true,
-                closeOnConfirm: false,
-                showLoaderOnConfirm: true
-            }, function () {
-                setTimeout(function () {
-                    $.ajax({
-                        type: "POST",
-                        url: "/MedicalPath/addDoctorToPath",
+                    title: "Adding doctors to patient path",
+                    text: "are you sure to add this doctor?",
+                    type: "info",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true
+                },
+                function() {
+                    setTimeout(function() {
+                            $.ajax({
+                                type: "POST",
+                                url: "/MedicalPath/addDoctorToPath",
 
-                        data: { idDoc: $('#docId').val(), idpath: $('#idPathPatient').val(),desc: $('#docspec').val() },
-                        dataType: "json",
-                        success: function (data) {
-                            $('#DropDoc').empty();
-                            //swal("Succes!", "You wrote: " + data.message, "success");
+                                data: {
+                                    idDoc: $('#docId').val(),
+                                    idpath: $('#idPathPatient').val(),
+                                    desc: $('#docspec').val(),
+                                    email: pat.email
+                        },
+                                dataType: "json",
+                                success: function(data) {
+                                    $('#DropDoc').empty();
+                                    //swal("Succes!", "You wrote: " + data.message, "success");
 
-                            location.reload();
+                                    location.reload();
 
-                        }
-                    });
-                }, 2000);
-            });
+                                }
+                            });
+                        },
+                        2000);
+                });
         }
+        function distance(lat1, lon1, lat2, lon2, unit) {
+            var radlat1 = Math.PI * lat1/180
+            var radlat2 = Math.PI * lat2/180
+            var radlon1 = Math.PI * lon1/180
+            var radlon2 = Math.PI * lon2/180
+            var theta = lon1-lon2
+            var radtheta = Math.PI * theta/180
+            var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+            dist = Math.acos(dist)
+            dist = dist * 180/Math.PI
+            dist = dist * 60 * 1.1515
+            if (unit=="K") { dist = dist * 1.609344 }
+            if (unit=="N") { dist = dist * 0.8684 }
+            return dist
+        }        
     </script>
 }
+
