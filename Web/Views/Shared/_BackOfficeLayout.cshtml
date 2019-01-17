@@ -349,7 +349,79 @@
         </li>
     </ul>
 </li>
-
+<li class="nav-item">
+    <a href="#" class="nav-link nav-toggle">
+        <i class="material-icons">email</i>
+        <span class="title">Email</span>
+        <span class="arrow"></span>
+        <span class="label label-rouded label-menu deepPink-bgcolor">3</span>
+    </a>
+    <ul class="sub-menu">
+        <li class="nav-item  ">
+            <a href="email_inbox.html" class="nav-link ">
+                <span class="title">Inbox</span>
+            </a>
+        </li>
+        <li class="nav-item  ">
+            <a href="email_view.html" class="nav-link ">
+                <span class="title">View Mail</span>
+            </a>
+        </li>
+        <li class="nav-item  ">
+            <a href="email_compose.html" class="nav-link ">
+                <span class="title">Compose Mail</span>
+            </a>
+        </li>
+    </ul>
+</li>
+<li class="nav-item  ">
+    <a href="#" class="nav-link nav-toggle">
+        <i class="material-icons">assignment</i>
+        <span class="title">Appointment</span><span class="arrow"></span>
+    </a>
+    <ul class="sub-menu">
+    
+        <li class="nav-item  ">
+            <a href="@Url.Action("showRdv", "Patient", new { id = 15 })" class="nav-link ">
+                <span class="title">Show Appointments</span>
+            </a>
+        </li>
+        
+    </ul>
+</li>
+<li class="nav-item  ">
+    <a href="#" class="nav-link nav-toggle">
+        <i class="material-icons">person</i>
+        <span class="title">Doctors</span> <span class="arrow"></span>
+    </a>
+    <ul class="sub-menu">
+        <li class="nav-item  ">
+            <a href="all_doctors.html" class="nav-link ">
+                <span class="title">All Doctor</span>
+            </a>
+        </li>
+        <li class="nav-item  ">
+            <a href="add_doctor.html" class="nav-link ">
+                <span class="title">Add Doctor</span>
+            </a>
+        </li>
+        <li class="nav-item  ">
+            <a href="add_doctor_material.html" class="nav-link ">
+                <span class="title">Add Doctor Material</span>
+            </a>
+        </li>
+        <li class="nav-item  ">
+            <a href="edit_doctor.html" class="nav-link ">
+                <span class="title">Edit Doctor</span>
+            </a>
+        </li>
+        <li class="nav-item  ">
+            <a href="doctor_profile.html" class="nav-link ">
+                <span class="title">About Doctor</span>
+            </a>
+        </li>
+    </ul>
+</li>
 <li class="nav-item  ">
     <a href="#" class="nav-link nav-toggle">
         <i class="material-icons">group</i>
@@ -771,7 +843,6 @@
 <script src=@Url.Content("~/Content/ADMIN/assets/chart-js/home-data.js")></script>
 <script src=@Url.Content("~/Content/ADMIN/assets/sweet-alert/sweetalert.min.js")></script>
 <script src=@Url.Content("~/Content/ADMIN/assets/sweet-alert/sweet-alert-data.js")></script>
-@RenderSection("scripts")
 <!-- end js include path -->
 </body>
 
