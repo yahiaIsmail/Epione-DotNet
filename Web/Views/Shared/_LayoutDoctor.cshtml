@@ -28,6 +28,19 @@
     <link href=@Url.Content("~/Content/ADMIN/css/theme-color.css") rel="stylesheet" type="text/css" />
     <!-- favicon -->
     <link rel="shortcut icon" href=@Url.Content("~/Content/ADMIN/img/favicon.ico") />
+
+    <!-- Start of ChatBot (www.chatbot.com) code -->
+    <script type="text/javascript">
+    window.__be = window.__be || {};
+    window.__be.id = "5bfb2d1e3fd03310106f9cb4";
+    (function() {
+        var be = document.createElement('script'); be.type = 'text/javascript'; be.async = true;
+        be.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.chatbot.com/widget/plugin.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(be, s);
+    })();
+    </script>
+    <!-- End of ChatBot code -->
+
 </head>
 <!-- END HEAD -->
 <body class="page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white white-sidebar-color logo-indigo">
@@ -248,6 +261,7 @@
                                 <span style="color: red;">
                                     Welcome @Session["firstName"]
                                     @Html.ActionLink("Logout", "Logout", "DoctorHome")
+                                    <a href="~/ChatPage.aspx">Chat now</a>
                                 </span>
                             </li>
                                 }

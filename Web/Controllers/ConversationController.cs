@@ -15,7 +15,7 @@ namespace Web.Controllers
         // GET: Conversation
         public ActionResult Index()
         {
-            HttpClient Client = new HttpClient();
+            /*HttpClient Client = new HttpClient();
             Client.BaseAddress = new Uri("http://localhost:2663/");
             Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             HttpResponseMessage response = Client.GetAsync("api/conversation").Result;
@@ -25,8 +25,13 @@ namespace Web.Controllers
             }else
             {
                 ViewBag.result = "error";
-            }
+            }*/
             return View();
+           
+        }
+        public ActionResult chat()
+        {
+            return View("ChatPage.aspx");
         }
         // GET: Conversation/Details/5
         public ActionResult Details(int id)

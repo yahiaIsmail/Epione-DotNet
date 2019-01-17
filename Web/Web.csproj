@@ -45,6 +45,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AjaxControlToolkit, Version=17.1.1.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
+      <HintPath>..\packages\AjaxControlToolkit.17.1.1.0\lib\net40\AjaxControlToolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="CloudinaryDotNet, Version=1.5.0.0, Culture=neutral, PublicKeyToken=c8234dc617ae7841, processorArchitecture=MSIL">
       <HintPath>..\packages\CloudinaryDotNet.1.5.0\lib\net40\CloudinaryDotNet.dll</HintPath>
     </Reference>
@@ -88,11 +92,31 @@
       <HintPath>..\packages\Microsoft.ApplicationInsights.2.0.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.4.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.4.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.8.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.6.8.8\lib\net45\MySql.Data.dll</HintPath>
       <Private>True</Private>
@@ -103,6 +127,10 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\CloudinaryDotNet.1.5.0\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PdfSharp, Version=1.50.4845.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\packages\PDFsharp.1.50.4845-RC2a\lib\net20\PdfSharp.dll</HintPath>
@@ -193,6 +221,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="ChatPage.aspx.cs">
+      <DependentUpon>ChatPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ChatPage.aspx.designer.cs">
+      <DependentUpon>ChatPage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\BackOfficeHomeController.cs" />
     <Compile Include="Controllers\DemandeController.cs" />
     <Compile Include="Controllers\DoctorController.cs" />
@@ -208,6 +243,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Models\AddressViewModel.cs" />
     <Compile Include="Models\DemandViewModel.cs" />
     <Compile Include="Models\DoctorPathViewModel.cs" />
@@ -220,10 +256,13 @@
     <Compile Include="Models\rankdoc.cs" />
     <Compile Include="Models\RdvForMedicalViewModel.cs" />
     <Compile Include="Models\RdvViewModel.cs" />
+    <Compile Include="Models\UseInChatViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ChatPage.aspx" />
     <Content Include="Content\ADMIN\assets\app.js" />
     <Content Include="Content\ADMIN\assets\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
     <Content Include="Content\ADMIN\assets\bootstrap-colorpicker\img\bootstrap-colorpicker\alpha-horizontal.png" />
@@ -601,6 +640,9 @@
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\tables.css" />
     <Content Include="Content\css\vendors.css" />
+    <Content Include="Content\emojionearea.css" />
+    <Content Include="Content\emojionearea.min.css" />
+    <Content Include="Content\font-awesome.css" />
     <Content Include="Content\img\apple-touch-icon-114x114-precomposed.png" />
     <Content Include="Content\img\apple-touch-icon-144x144-precomposed.png" />
     <Content Include="Content\img\apple-touch-icon-57x57-precomposed.png" />
@@ -676,6 +718,7 @@
     <Content Include="Content\rev-slider-files\js\extensions\revolution.extension.video.min.js" />
     <Content Include="Content\rev-slider-files\js\jquery.themepunch.revolution.min.js" />
     <Content Include="Content\rev-slider-files\js\jquery.themepunch.tools.min.js" />
+    <Content Include="Content\Style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -745,9 +788,15 @@
     <Content Include="Content\ADMIN\assets\summernote\font\summernote291f.woff" />
     <Content Include="Content\ADMIN\assets\summernote\font\summernoted41d.eot" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\date.format.js" />
+    <Content Include="Scripts\emojionearea.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.0.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.0.min.js" />
+    <Content Include="Scripts\jquery.slimscroll.js" />
+    <Content Include="Scripts\jquery.slimscroll.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -755,6 +804,8 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\stt.js" />
+    <Content Include="Scripts\tts.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\MedicalPath\leaf-red.png" />
     <Content Include="Web.config">
@@ -794,7 +845,12 @@
     <Content Include="Views\BackOfficeHome\Delete.cshtml" />
     <Content Include="Views\Shared\_LayoutDoctor.cshtml" />
     <Content Include="Views\DoctorHome\Index.cshtml" />
+
     <Content Include="Views\MedicalPath\GetVisits.cshtml" />
+
+    <Content Include="Views\Conversation\Index.cshtml" />
+    <Content Include="Views\Conversation\Create.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
