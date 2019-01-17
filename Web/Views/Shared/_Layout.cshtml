@@ -100,6 +100,7 @@
                                         @if (!string.IsNullOrEmpty(Session["firstName"] as string))
                                         {
                                             @Html.ActionLink("Logout", "Logout", "Home")
+                                            <a href="~/ChatPage.aspx">Chat now</a>
                                         }
                                         @if (string.IsNullOrEmpty(Session["firstName"] as string))
                                         {
